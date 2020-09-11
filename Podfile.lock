@@ -1,0 +1,16 @@
+PODS:
+  - FontAwesome.swift (1.9.0)
+
+DEPENDENCIES:
+  - FontAwesome.swift
+
+SPEC REPOS:
+  trunk:
+    - FontAwesome.swift
+
+SPEC CHECKSUMS:
+  FontAwesome.swift: a403b88cec950511745ba8f2decd1b6a07346d13
+
+PODFILE CHECKSUM: 6004e3326732886097abd9c3058a1ad89b838aeb
+
+COCOAPODS: 1.9.3
