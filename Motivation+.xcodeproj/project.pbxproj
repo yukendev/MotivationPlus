@@ -3,10 +3,13 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4548D152250B9DB400FC9CDD /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4548D151250B9DB400FC9CDD /* TabBarViewController.swift */; };
+		4548D155250C370F00FC9CDD /* FollowerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4548D153250C370F00FC9CDD /* FollowerTableViewCell.swift */; };
+		4548D156250C370F00FC9CDD /* FollowerTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4548D154250C370F00FC9CDD /* FollowerTableViewCell.xib */; };
 		4568B6FF250AF8B200131597 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4568B6FE250AF8B200131597 /* AppDelegate.swift */; };
 		4568B701250AF8B200131597 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4568B700250AF8B200131597 /* SceneDelegate.swift */; };
 		4568B708250AF8B200131597 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4568B706250AF8B200131597 /* Main.storyboard */; };
@@ -23,6 +26,9 @@
 /* Begin PBXFileReference section */
 		27B883F4F2557D085951D8B5 /* Pods-Motivation+.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Motivation+.debug.xcconfig"; path = "Target Support Files/Pods-Motivation+/Pods-Motivation+.debug.xcconfig"; sourceTree = "<group>"; };
 		3E57B94FDF73A56422D13A3A /* Pods_Motivation_.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Motivation_.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4548D151250B9DB400FC9CDD /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
+		4548D153250C370F00FC9CDD /* FollowerTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowerTableViewCell.swift; sourceTree = "<group>"; };
+		4548D154250C370F00FC9CDD /* FollowerTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FollowerTableViewCell.xib; sourceTree = "<group>"; };
 		4568B6FB250AF8B200131597 /* Motivation+.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Motivation+.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4568B6FE250AF8B200131597 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4568B700250AF8B200131597 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -90,6 +96,7 @@
 				4568B71B250AF99700131597 /* UserInfoViewController.swift */,
 				4568B71D250B60DD00131597 /* RequestViewController.swift */,
 				4568B71F250B60E800131597 /* SearchViewController.swift */,
+				4548D151250B9DB400FC9CDD /* TabBarViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -99,6 +106,8 @@
 			children = (
 				4568B706250AF8B200131597 /* Main.storyboard */,
 				4568B709250AF8B600131597 /* Assets.xcassets */,
+				4548D153250C370F00FC9CDD /* FollowerTableViewCell.swift */,
+				4548D154250C370F00FC9CDD /* FollowerTableViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -116,7 +125,6 @@
 				27B883F4F2557D085951D8B5 /* Pods-Motivation+.debug.xcconfig */,
 				FF088CB4627F31B4E92257AA /* Pods-Motivation+.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -191,6 +199,7 @@
 				4568B70D250AF8B600131597 /* LaunchScreen.storyboard in Resources */,
 				4568B70A250AF8B600131597 /* Assets.xcassets in Resources */,
 				4568B708250AF8B200131597 /* Main.storyboard in Resources */,
+				4548D156250C370F00FC9CDD /* FollowerTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -243,6 +252,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4548D152250B9DB400FC9CDD /* TabBarViewController.swift in Sources */,
 				4568B71A250AF98700131597 /* FollowerViewController.swift in Sources */,
 				4568B720250B60E800131597 /* SearchViewController.swift in Sources */,
 				4568B6FF250AF8B200131597 /* AppDelegate.swift in Sources */,
@@ -250,6 +260,7 @@
 				4568B71C250AF99700131597 /* UserInfoViewController.swift in Sources */,
 				4568B701250AF8B200131597 /* SceneDelegate.swift in Sources */,
 				4568B718250AF97500131597 /* HomeViewController.swift in Sources */,
+				4548D155250C370F00FC9CDD /* FollowerTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
