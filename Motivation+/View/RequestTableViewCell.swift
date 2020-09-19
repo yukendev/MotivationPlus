@@ -15,6 +15,7 @@ class RequestTableViewCell: UITableViewCell {
     @IBOutlet weak var iconImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var followButton: UIButton!
+    @IBOutlet weak var canselButton: UIButton!
     
     
     
@@ -27,6 +28,8 @@ class RequestTableViewCell: UITableViewCell {
         nameLabel.layer.cornerRadius = 5
         nameLabel.clipsToBounds = true
         followButton.layer.cornerRadius = 5
+        canselButton.layer.cornerRadius = 5
+        
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

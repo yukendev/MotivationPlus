@@ -15,6 +15,7 @@ class TabBarViewController: UITabBarController {
 
 //        UITabBarItem.appearance().setTitleTextAttributes([ .foregroundColor : UIColor.white], for: .selected)
         UITabBar.appearance().tintColor = UIColor.white
+        selectedIndex = 1
     }
     
 

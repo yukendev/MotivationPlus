@@ -7,55 +7,63 @@
 //
 
 import UIKit
+import FirebaseAuth
+import FirebaseFirestore
 
-class UserInfoViewController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
+class UserInfoViewController: UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
     
     
     @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var editButton: UIButton!
+    @IBOutlet weak var nameLabel: UILabel!
+    
+    
+    var uid = String()
+    let db = Firestore.firestore()
+    var user = Auth.auth().currentUser
     
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        textField.delegate = self
         imageView.layer.cornerRadius = 20
         imageView.isUserInteractionEnabled = true
         editButton.layer.cornerRadius = 5
+        nameLabel.layer.borderWidth = 2
+        nameLabel.layer.cornerRadius = 5
+        
+        uid = user!.uid
+        
         
     }
     
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        view.endEditing(true)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        db.collection("users").document(uid).getDocument { (document, error) in
+            if let document = document, document.exists {
+                let dataArray = document.data()
+                if dataArray!["name"] == nil {
+                    print("name is nil")
+                    self.nameLabel.text = "名前を設定して下さい"
+                }else{
+                    print("name is not nil")
+                    self.nameLabel.text = dataArray!["name"] as? String
+                }
+              } else {
+                print("Document does not exist in cache")
+              }
+        }
     }
     
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-    }
     
     
     
     @IBAction func editAction(_ sender: Any) {
         print("編集されました")
+        performSegue(withIdentifier: "edit", sender: nil)
     }
+
     
-    @IBAction func pictureAction(_ sender: Any) {
-        if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
-            let cameraPicker = UIImagePickerController()
-            cameraPicker.sourceType = .photoLibrary
-            cameraPicker.delegate = self
-            cameraPicker.allowsEditing = true
-            self.present(cameraPicker, animated: true, completion: nil)
-        }else{
-            print("error")
-        }
-    }
-    
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        let image = info[.originalImage] as! UIImage
-        imageView.image = image
-        self.dismiss(animated: true)
-    }
     
 }

@@ -81,7 +81,7 @@
                 <outlet property="iconImageView" destination="A3k-Ra-ux6" id="c98-WO-IN1"/>
                 <outlet property="nameLabel" destination="4nf-FZ-MYw" id="XHl-Ju-9Eq"/>
             </connections>
-            <point key="canvasLocation" x="145.6521739130435" y="135.9375"/>
+            <point key="canvasLocation" x="40" y="94"/>
         </tableViewCell>
     </objects>
     <resources>

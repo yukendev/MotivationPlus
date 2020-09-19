@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import FirebaseAuth
+import FirebaseFirestore
 
 class FollowerViewController: UIViewController {
     
@@ -18,6 +20,7 @@ class FollowerViewController: UIViewController {
     @IBOutlet weak var startButton: UIButton!
     @IBOutlet weak var stopButton: UIButton!
     @IBOutlet weak var resetButton: UIButton!
+    @IBOutlet weak var finishButton: UIButton!
     
     
     
@@ -26,9 +29,13 @@ class FollowerViewController: UIViewController {
     var minute: Int = 0
     var hour: Int = 0
     
+    var uid = String()
+    let db = Firestore.firestore()
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("ViewDidLoad Start")
         
         timerContainer.layer.borderWidth = 2.0
         timerContainer.layer.borderColor = UIColor.black.cgColor
@@ -38,21 +45,67 @@ class FollowerViewController: UIViewController {
         startButton.layer.cornerRadius = 5
         stopButton.layer.cornerRadius = 5
         resetButton.layer.cornerRadius = 5
+        finishButton.layer.cornerRadius = 5
         
         stopButton.isHidden = true
         resetButton.isHidden = true
+        finishButton.isHidden = true
+        
+        Auth.auth().signInAnonymously { [self] (authResult, error) in
+            guard let user = authResult?.user else { return }
+            let isAnonymous = user.isAnonymous  // true
+            let uidString = user.uid
+            print(isAnonymous)
+            print(uidString)
+            self.uid = uidString
+            db.collection("users").document(uid).updateData([
+                "uid": uid
+            ]) { err in
+                if let err = err {
+                    print("Error writing document: \(err)")
+                } else {
+                    print("Document successfully written!")
+                }
+            }
+        }
+        
+        print("ViewDidLoad Finish")
 
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        print("ViewWillAppear Start")
     }
     
     
     @IBAction func startAction(_ sender: Any) {
-        if !timer.isValid {
-            timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(startTimer), userInfo: nil, repeats: true)
+        db.collection("users").document(uid).getDocument { [self] (document, error) in
+            if let document = document, document.exists {
+                let documentArray = document.data()
+                print("JK")
+                print(documentArray!["uid"]!)
+                if documentArray!["name"] == nil {
+                    print("name is nil")
+                    self.showAlert(title: "ユーザーネームを決めて下さい")
+                }else{
+                    print("name is not nil")
+                    
+                    if !timer.isValid {
+                        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(startTimer), userInfo: nil, repeats: true)
+                    }
+                    
+                    startButton.isHidden = true
+                    stopButton.isHidden = false
+                    resetButton.isHidden = true
+                    finishButton.isHidden = true
+                    
+                }
+                } else {
+                    print("Document does not exist")
+                }
         }
-        
-        startButton.isHidden = true
-        stopButton.isHidden = false
-        resetButton.isHidden = true
     }
     
     @IBAction func stopAction(_ sender: Any) {
@@ -63,6 +116,7 @@ class FollowerViewController: UIViewController {
         startButton.isHidden = false
         stopButton.isHidden = true
         resetButton.isHidden = false
+        finishButton.isHidden = false
         
     }
     
@@ -83,6 +137,7 @@ class FollowerViewController: UIViewController {
         startButton.isHidden = false
         stopButton.isHidden = true
         resetButton.isHidden = true
+        finishButton.isHidden = true
     }
     
     @objc func startTimer() {
@@ -108,6 +163,20 @@ class FollowerViewController: UIViewController {
         hourLabel.text = "\(sHour)"
         minuteLabel.text = "\(sMinute)"
         secondLabel.text = "\(sSecond)"
+    }
+    
+    
+    @IBAction func finishAction(_ sender: Any) {
+        print("finish!!!!!!")
+        performSegue(withIdentifier: "modal", sender: nil)
+    }
+    
+    func showAlert(title: String) {
+        let alertController = UIAlertController(title: title, message: "", preferredStyle: .alert)
+        let cansel = UIAlertAction(title: "OK", style: .cancel)
+        alertController.addAction(cansel)
+        
+        self.present(alertController, animated: true, completion: nil)
     }
     
 

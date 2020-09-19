@@ -8,5 +8,10 @@ target 'Motivation+' do
   # Pods for Motivation+
 
 pod 'FontAwesome.swift'
+pod 'Firebase/Analytics'
+pod 'Firebase/Core'
+pod 'Firebase/Firestore'
+pod 'FirebaseFirestoreSwift'
+pod 'Firebase/Auth'
 
 end
