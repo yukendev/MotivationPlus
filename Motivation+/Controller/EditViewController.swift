@@ -9,6 +9,7 @@
 import UIKit
 import FirebaseAuth
 import FirebaseFirestore
+import FirebaseStorage
 
 class EditViewController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
     
@@ -19,6 +20,8 @@ class EditViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
     var uid = String()
     let db = Firestore.firestore()
     var user = Auth.auth().currentUser
+    let storage = Storage.storage()
+    var ProfileImageData: Data = Data()
     
 
     override func viewDidLoad() {
@@ -49,16 +52,34 @@ class EditViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
                 print("Document does not exist in cache")
               }
         }
+        
+        let storageRef = storage.reference()
+        let storageReference = storageRef.child("profileImage/\(uid).jpg")
+        let placeholderImage = UIImage(named: "IMG_0509")
+        imageView.sd_setImage(with: storageReference, placeholderImage: placeholderImage)
     }
     
     @IBAction func editAction(_ sender: Any) {
         if textField.text == "" || textField.text == nil {
             showAlert(title: "入力して下さい")
         }else{
+            
             db.collection("users").document(uid).updateData([
                 "name": textField.text!
             ])
+            let storageRef = storage.reference()
+            let imageRef = storageRef.child("profileImage/\(uid).jpg")
+            if imageView.image != nil {
+                ProfileImageData = (imageView.image?.jpegData(compressionQuality: 0.01))!
+                imageRef.putData(ProfileImageData, metadata: nil) {
+                    (metaData, error) in
+                    if error != nil {
+                        print(error!)
+                    }
+                }
+            }
             dismiss(animated: true, completion: nil)
+            
         }
     }
     

@@ -7,8 +7,10 @@
 //
 
 import UIKit
+import FirebaseStorage
 import FirebaseAuth
 import FirebaseFirestore
+import FirebaseUI
 
 class UserInfoViewController: UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
     
@@ -21,6 +23,7 @@ class UserInfoViewController: UIViewController, UIImagePickerControllerDelegate 
     var uid = String()
     let db = Firestore.firestore()
     var user = Auth.auth().currentUser
+    let storage = Storage.storage()
     
 
     override func viewDidLoad() {
@@ -54,6 +57,13 @@ class UserInfoViewController: UIViewController, UIImagePickerControllerDelegate 
                 print("Document does not exist in cache")
               }
         }
+        
+        let storageRef = storage.reference()
+        let storageReference = storageRef.child("profileImage/\(uid).jpg")
+        let placeholderImage = UIImage(named: "IMG_0509")
+        imageView.sd_setImage(with: storageReference, placeholderImage: placeholderImage)
+        print("viewWillAppear finish")
+        
     }
     
     

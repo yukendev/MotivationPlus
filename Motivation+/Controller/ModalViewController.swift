@@ -11,11 +11,15 @@ import UIKit
 class ModalViewController: UIViewController {
     
     @IBOutlet weak var backButton: UIButton!
+    @IBOutlet weak var timeLabel: UILabel!
+    
+    var timeText = String()
     
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        timeLabel.text = timeText
         
     }
     

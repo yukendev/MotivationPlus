@@ -91,6 +91,10 @@ class FollowerViewController: UIViewController {
                     self.showAlert(title: "ユーザーネームを決めて下さい")
                 }else{
                     print("name is not nil")
+                    db.collection("users").document(uid).updateData([
+                        "state": "studying",
+                        "studyTime": ""
+                    ])
                     
                     if !timer.isValid {
                         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(startTimer), userInfo: nil, repeats: true)
@@ -109,6 +113,9 @@ class FollowerViewController: UIViewController {
     }
     
     @IBAction func stopAction(_ sender: Any) {
+        db.collection("users").document(uid).updateData([
+            "state": "not studying"
+        ])
         if timer.isValid {
             timer.invalidate()
         }
@@ -167,8 +174,7 @@ class FollowerViewController: UIViewController {
     
     
     @IBAction func finishAction(_ sender: Any) {
-        print("finish!!!!!!")
-        performSegue(withIdentifier: "modal", sender: nil)
+        showAlert2(title: "本当に勉強を終了しますか？")
     }
     
     func showAlert(title: String) {
@@ -177,6 +183,38 @@ class FollowerViewController: UIViewController {
         alertController.addAction(cansel)
         
         self.present(alertController, animated: true, completion: nil)
+    }
+    
+    func showAlert2(title: String) {
+        let alertController = UIAlertController(title: title, message: "", preferredStyle: .alert)
+        let action1 = UIAlertAction(title: "はい", style: .default) { (alert) in
+            self.okAction()
+        }
+        let cansel = UIAlertAction(title: "いいえ", style: .cancel)
+        alertController.addAction(cansel)
+        alertController.addAction(action1)
+        
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
+    func okAction() {
+        print("finish!!!!!!")
+        let sSecond = String(format:"%02d", second)
+        let sMinute = String(format:"%02d", minute)
+        let sHour = String(format:"%02d", hour)
+        db.collection("users").document(uid).updateData([
+            "state": "not studying",
+            "studyTime": "\(sHour):\(sMinute):\(sSecond)"
+        ])
+        performSegue(withIdentifier: "modal", sender: nil)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let sSecond = String(format:"%02d", second)
+        let sMinute = String(format:"%02d", minute)
+        let sHour = String(format:"%02d", hour)
+        let nextVC = segue.destination as! ModalViewController
+        nextVC.timeText = "\(sHour):\(sMinute):\(sSecond)"
     }
     
 

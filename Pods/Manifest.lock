@@ -231,6 +231,9 @@ PODS:
   - Firebase/Firestore (6.31.0):
     - Firebase/CoreOnly
     - FirebaseFirestore (~> 1.17.0)
+  - Firebase/Storage (6.31.0):
+    - Firebase/CoreOnly
+    - FirebaseStorage (~> 3.9.0)
   - FirebaseAnalytics (6.8.0):
     - FirebaseCore (~> 6.10)
     - FirebaseInstallations (~> 1.6)
@@ -273,6 +276,12 @@ PODS:
     - GoogleUtilities/Environment (~> 6.7)
     - GoogleUtilities/UserDefaults (~> 6.7)
     - PromisesObjC (~> 1.2)
+  - FirebaseStorage (3.9.0):
+    - FirebaseCore (~> 6.10)
+    - GTMSessionFetcher/Core (~> 1.1)
+  - FirebaseUI/Storage (8.4.2):
+    - Firebase/Storage (~> 6.0)
+    - SDWebImage (~> 5.0)
   - FontAwesome.swift (1.9.0)
   - GoogleAppMeasurement (6.8.0):
     - GoogleUtilities/AppDelegateSwizzler (~> 6.7)
@@ -333,13 +342,18 @@ PODS:
   - nanopb/decode (1.30906.0)
   - nanopb/encode (1.30906.0)
   - PromisesObjC (1.2.10)
+  - SDWebImage (5.9.0):
+    - SDWebImage/Core (= 5.9.0)
+  - SDWebImage/Core (5.9.0)
 
 DEPENDENCIES:
   - Firebase/Analytics
   - Firebase/Auth
   - Firebase/Core
   - Firebase/Firestore
+  - Firebase/Storage
   - FirebaseFirestoreSwift
+  - FirebaseUI/Storage
   - FontAwesome.swift
 
 SPEC REPOS:
@@ -354,6 +368,8 @@ SPEC REPOS:
     - FirebaseFirestore
     - FirebaseFirestoreSwift
     - FirebaseInstallations
+    - FirebaseStorage
+    - FirebaseUI
     - FontAwesome.swift
     - GoogleAppMeasurement
     - GoogleDataTransport
@@ -364,6 +380,7 @@ SPEC REPOS:
     - leveldb-library
     - nanopb
     - PromisesObjC
+    - SDWebImage
 
 SPEC CHECKSUMS:
   abseil: 6c8eb7892aefa08d929b39f9bb108e5367e3228f
@@ -376,6 +393,8 @@ SPEC CHECKSUMS:
   FirebaseFirestore: ef0ad529a72c8e6542050dc7742fbd4cf009f297
   FirebaseFirestoreSwift: 2c46dbc1156db97dc4f6dd798d4f5b57b9c7fab6
   FirebaseInstallations: 466c7b4d1f58fe16707693091da253726a731ed2
+  FirebaseStorage: 33b92875a9b556824886cc7a65120c7d2cb3a8d8
+  FirebaseUI: e57e9b9c4340631151fbe67a14206d23d0974f37
   FontAwesome.swift: a403b88cec950511745ba8f2decd1b6a07346d13
   GoogleAppMeasurement: ecc30d0ab5b66d7d18e85ce1b8e2b345db60626d
   GoogleDataTransport: e85fb700c9b027079ce182c3d08e12e0f9618bb4
@@ -386,7 +405,8 @@ SPEC CHECKSUMS:
   leveldb-library: 55d93ee664b4007aac644a782d11da33fba316f7
   nanopb: 59317e09cf1f1a0af72f12af412d54edf52603fc
   PromisesObjC: b14b1c6b68e306650688599de8a45e49fae81151
+  SDWebImage: 62ae4a18473520c67b79e9724c31a63599cc9423
 
-PODFILE CHECKSUM: e05553e5e0c825c86448dbc8bd1119e37223c1b0
+PODFILE CHECKSUM: d45f702e1926fab4576410b00c559414c2a0aec5
 
 COCOAPODS: 1.9.3
