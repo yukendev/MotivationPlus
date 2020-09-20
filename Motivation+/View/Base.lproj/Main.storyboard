@@ -486,7 +486,7 @@
                         <outlet property="editButton" destination="Ith-WM-jZ0" id="gYX-f7-scQ"/>
                         <outlet property="imageView" destination="e8e-C4-SRc" id="eu9-NH-zmH"/>
                         <outlet property="nameLabel" destination="lZQ-uR-aCr" id="Wv7-dC-D6F"/>
-                        <segue destination="ILc-Db-FVe" kind="show" identifier="edit" id="qBU-GN-Ow9"/>
+                        <segue destination="ILc-Db-FVe" kind="showDetail" identifier="edit" id="qBU-GN-Ow9"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NOR-ko-8M9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

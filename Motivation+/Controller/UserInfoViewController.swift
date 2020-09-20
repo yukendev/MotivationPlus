@@ -10,7 +10,8 @@ import UIKit
 import FirebaseStorage
 import FirebaseAuth
 import FirebaseFirestore
-import FirebaseUI
+//import FirebaseUI
+import SDWebImage
 
 class UserInfoViewController: UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
     
@@ -58,10 +59,8 @@ class UserInfoViewController: UIViewController, UIImagePickerControllerDelegate 
               }
         }
         
-        let storageRef = storage.reference()
-        let storageReference = storageRef.child("profileImage/\(uid).jpg")
-        let placeholderImage = UIImage(named: "IMG_0509")
-        imageView.sd_setImage(with: storageReference, placeholderImage: placeholderImage)
+        downloadPicture()
+        
         print("viewWillAppear finish")
         
     }
@@ -73,6 +72,22 @@ class UserInfoViewController: UIViewController, UIImagePickerControllerDelegate 
         print("編集されました")
         performSegue(withIdentifier: "edit", sender: nil)
     }
+    
+    
+    func downloadPicture() {
+        print("download start")
+        let storageRef = storage.reference(forURL: "gs://motivationplus-e098a.appspot.com/")
+        let imageRef = storageRef.child("\(uid).jpg")
+        imageRef.downloadURL { (url, error) in
+            let imageUrl:URL = url!
+            print("set start")
+            print("\(String(describing: url))")
+            self.imageView.sd_setImage(with: imageUrl)
+            print("set finish")
+        }
+        print("download finish")
+    }
+    
 
     
     

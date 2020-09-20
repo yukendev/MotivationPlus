@@ -10,6 +10,7 @@ import UIKit
 import FirebaseAuth
 import FirebaseFirestore
 import FirebaseStorage
+import SDWebImage
 
 class EditViewController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
     
@@ -53,10 +54,7 @@ class EditViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
               }
         }
         
-        let storageRef = storage.reference()
-        let storageReference = storageRef.child("profileImage/\(uid).jpg")
-        let placeholderImage = UIImage(named: "IMG_0509")
-        imageView.sd_setImage(with: storageReference, placeholderImage: placeholderImage)
+        downloadPicture()
     }
     
     @IBAction func editAction(_ sender: Any) {
@@ -67,17 +65,7 @@ class EditViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
             db.collection("users").document(uid).updateData([
                 "name": textField.text!
             ])
-            let storageRef = storage.reference()
-            let imageRef = storageRef.child("profileImage/\(uid).jpg")
-            if imageView.image != nil {
-                ProfileImageData = (imageView.image?.jpegData(compressionQuality: 0.01))!
-                imageRef.putData(ProfileImageData, metadata: nil) {
-                    (metaData, error) in
-                    if error != nil {
-                        print(error!)
-                    }
-                }
-            }
+            pushData()
             dismiss(animated: true, completion: nil)
             
         }
@@ -121,5 +109,31 @@ class EditViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
         self.present(alertController, animated: true, completion: nil)
     }
     
+    func pushData() {
+        let storageRef = storage.reference(forURL: "gs://motivationplus-e098a.appspot.com/")
+        let imageRef = storageRef.child("\(uid).jpg")
+        var imageData = Data()
+        let meta = StorageMetadata()
+        meta.contentType = "image/jpeg"
+        if imageView.image != nil {
+            imageData = (imageView.image?.jpegData(compressionQuality: 0.01))!
+        }
+        
+        imageRef.putData(imageData, metadata: meta) {(metaData, error) in
+            if error != nil {
+                print(error!)
+                return
+            }
+        }
+    }
+    
+    func downloadPicture() {
+        let storageRef = storage.reference(forURL: "gs://motivationplus-e098a.appspot.com/")
+        let imageRef = storageRef.child("\(uid).jpg")
+        imageRef.downloadURL { (url, error) in
+            let imageUrl:URL = url!
+            self.imageView.sd_setImage(with: imageUrl)
+        }
+    }
     
 }
