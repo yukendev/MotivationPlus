@@ -60,11 +60,13 @@ class FollowerViewController: UIViewController {
             self.uid = uidString
             
             db.collection("users").document(uid).updateData([
-                "uid": uid
+                "uid": uid,
+                "userId":"@" + uid.prefix(5)
             ]) { err in
                 if err != nil {
                     db.collection("users").document(uid).setData([
-                        "uid": uid
+                        "uid": uid,
+                        "userId":"@" + uid.prefix(5)
                     ]) { err in
                         if let err = err {
                             print("Error writing document: \(err)")

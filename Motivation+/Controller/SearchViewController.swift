@@ -15,11 +15,11 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
-    
-    let nameArray: [String] = ["増山", "春", "けんちゃん", "はるぴー"]
+
     var uid = String()
     let db = Firestore.firestore()
     var user = Auth.auth().currentUser
+    var userArray = [User]()
     
 
     
@@ -38,20 +38,26 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
 
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        userArray = []
+    }
 
     @IBAction func backAction(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return nameArray.count
+        return userArray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "Search", for: indexPath) as! SearchTableViewCell
         
-        cell.nameLabel.text = nameArray[indexPath.row]
+        cell.nameLabel.text = userArray[indexPath.row].name
+        cell.uid = userArray[indexPath.row].uid
         cell.selectionStyle = .none
         
         return cell
@@ -59,11 +65,14 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         print("search")
-        
+        if searchBar.text != nil {
+            search(text: searchBar.text!)
+        }
     }
     
     func search(text: String) {
-        var userArray = [User]()
+        print("start")
+        userArray = []
         db.collection("users").getDocuments { (snapshot, error) in
             if error != nil {
                 print(error!)
@@ -71,21 +80,30 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 guard (snapshot != nil) else {
                     return
                 }
+                print("wow")
                 for document in snapshot!.documents {
+                    print("hi")
                     let userData = document.data()
-                    let userId = userData["uid"] as! String
+                    let uid = userData["uid"] as! String
+                    let userId = "@" + uid.prefix(5)
                     let userName = userData["name"] as! String
                     let smallUserId = userId.lowercased()
                     
-                    if smallUserId.contains(text) {
+                    if userId.contains(text) || smallUserId.contains(text) {
+                        print("lol")
+                        print(smallUserId)
                         let user = User()
-                        user.uid = userId
+                        user.uid = uid
                         user.name = userName
-                        userArray.append(user)
+                        user.userId = userId
+                        self.userArray.append(user)
+                        self.tableView.reloadData()
                     }
                 }
             }
         }
+        tableView.reloadData()
+        print("end")
     }
     
 
