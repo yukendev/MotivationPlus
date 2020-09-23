@@ -66,7 +66,6 @@ class EditViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
                 "name": textField.text!
             ])
             pushData()
-            dismiss(animated: true, completion: nil)
             
         }
     }
@@ -120,6 +119,7 @@ class EditViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
         }
         
         imageRef.putData(imageData, metadata: meta) {(metaData, error) in
+            self.dismiss(animated: true, completion: nil)
             if error != nil {
                 print(error!)
                 return
@@ -128,12 +128,20 @@ class EditViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
     }
     
     func downloadPicture() {
+        print("download start")
         let storageRef = storage.reference(forURL: "gs://motivationplus-e098a.appspot.com/")
         let imageRef = storageRef.child("\(uid).jpg")
         imageRef.downloadURL { (url, error) in
-            let imageUrl:URL = url!
-            self.imageView.sd_setImage(with: imageUrl)
+            if url != nil {
+                let imageUrl:URL = url!
+                print("set start")
+                print("\(String(describing: url))")
+                self.imageView.sd_setImage(with: imageUrl)
+                print("set finish")
+            }else{
+                self.imageView.image = UIImage(named:"IMG_0509" )
+            }
         }
+        print("download finish")
     }
-    
 }

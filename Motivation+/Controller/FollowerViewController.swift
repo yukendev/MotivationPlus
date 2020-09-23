@@ -38,7 +38,7 @@ class FollowerViewController: UIViewController {
         print("ViewDidLoad Start")
         
         timerContainer.layer.borderWidth = 2.0
-        timerContainer.layer.borderColor = UIColor.black.cgColor
+        timerContainer.layer.borderColor = UIColor.gray.cgColor
         timerContainer.clipsToBounds = true
         timerContainer.layer.cornerRadius = 10
         
@@ -58,15 +58,26 @@ class FollowerViewController: UIViewController {
             print(isAnonymous)
             print(uidString)
             self.uid = uidString
+            
             db.collection("users").document(uid).updateData([
                 "uid": uid
             ]) { err in
-                if let err = err {
-                    print("Error writing document: \(err)")
+                if err != nil {
+                    db.collection("users").document(uid).setData([
+                        "uid": uid
+                    ]) { err in
+                        if let err = err {
+                            print("Error writing document: \(err)")
+                        } else {
+                            print("Document successfully written!")
+                        }
+                    }
                 } else {
                     print("Document successfully written!")
                 }
             }
+            
+            
         }
         
         print("ViewDidLoad Finish")
@@ -199,14 +210,32 @@ class FollowerViewController: UIViewController {
     
     func okAction() {
         print("finish!!!!!!")
-        let sSecond = String(format:"%02d", second)
-        let sMinute = String(format:"%02d", minute)
-        let sHour = String(format:"%02d", hour)
+        var sSecond = String(format:"%02d", second)
+        var sMinute = String(format:"%02d", minute)
+        var sHour = String(format:"%02d", hour)
         db.collection("users").document(uid).updateData([
             "state": "not studying",
             "studyTime": "\(sHour):\(sMinute):\(sSecond)"
         ])
         performSegue(withIdentifier: "modal", sender: nil)
+        
+        second = 0
+        minute = 0
+        hour = 0
+        timer.invalidate()
+        
+        sSecond = String(format:"%02d", second)
+        sMinute = String(format:"%02d", minute)
+        sHour = String(format:"%02d", hour)
+        
+        hourLabel.text = "\(sHour)"
+        minuteLabel.text = "\(sMinute)"
+        secondLabel.text = "\(sSecond)"
+        
+        startButton.isHidden = false
+        stopButton.isHidden = true
+        resetButton.isHidden = true
+        finishButton.isHidden = true
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
