@@ -66,7 +66,8 @@ class FollowerViewController: UIViewController {
                 if err != nil {
                     db.collection("users").document(uid).setData([
                         "uid": uid,
-                        "userId":"@" + uid.prefix(5)
+                        "userId":"@" + uid.prefix(5),
+                        "followers": []
                     ]) { err in
                         if let err = err {
                             print("Error writing document: \(err)")
