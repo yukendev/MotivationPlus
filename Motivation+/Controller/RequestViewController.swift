@@ -11,9 +11,7 @@ import FirebaseStorage
 import FirebaseAuth
 import FirebaseFirestore
 
-class RequestViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    
-    
+class RequestViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, myTableViewDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -36,6 +34,8 @@ class RequestViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         uid = user!.uid
 
+        let requestCell = RequestTableViewCell()
+        requestCell.delegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -84,6 +84,11 @@ class RequestViewController: UIViewController, UITableViewDelegate, UITableViewD
                 
             }
         }
+    }
+    
+    func tableViewReload() {
+        print("reload!!!!")
+        tableView.reloadData()
     }
     
 

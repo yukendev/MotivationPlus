@@ -25,6 +25,8 @@ class RequestTableViewCell: UITableViewCell {
     var user = Auth.auth().currentUser
     let storage = Storage.storage()
     
+    weak var delegate: myTableViewDelegate?
+    
     
     
     override func awakeFromNib() {
@@ -39,6 +41,7 @@ class RequestTableViewCell: UITableViewCell {
         canselButton.layer.cornerRadius = 5
         
         myUid = user!.uid
+        
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -50,14 +53,52 @@ class RequestTableViewCell: UITableViewCell {
     
     @IBAction func canselAction(_ sender: Any) {
         print("cansel!!!!!")
-        db.collection("users").document(myUid).getDocument { (snapshot, error) in
-            <#code#>
+        deleteFromRequests()
+        guard let delegate = delegate else {
+            print("No Person")
+            return
         }
+        delegate.tableViewReload()
     }
     
     @IBAction func followAction(_ sender: Any) {
         print("follow!!!!!")
+        deleteFromRequests()
+        follow()
+        guard let delegate = delegate else {
+            print("No Person")
+            return
+        }
+        delegate.tableViewReload()
     }
     
+    func deleteFromRequests() {
+        var oldArray: [String] = []
+        var newArray: [String] = []
+        db.collection("users").document(myUid).getDocument { [self] (snapshot, error) in
+            if snapshot != nil {
+                oldArray = snapshot!["requests"] as! [String]
+                newArray = oldArray.filter({ $0 != self.uid })
+                db.collection("users").document(myUid).updateData([
+                    "requests": newArray
+                ])
+            }
+        }
+    }
+    
+    func follow() {
+        var followerArray: [String] = []
+        db.collection("users").document(myUid).getDocument { [self] (snapshot, error) in
+            if snapshot != nil {
+                followerArray = snapshot!["followers"] as! [String]
+                followerArray.append(self.uid)
+                db.collection("users").document(myUid).updateData([
+                    "followers": followerArray
+                ])
+            }
+        }
+        
+        
+    }
     
 }

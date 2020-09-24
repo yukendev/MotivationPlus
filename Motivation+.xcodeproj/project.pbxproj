@@ -28,6 +28,7 @@
 		456E43852515857000B76F5B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 456E43842515857000B76F5B /* GoogleService-Info.plist */; };
 		456E43A02515B98100B76F5B /* ModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456E439F2515B98100B76F5B /* ModalViewController.swift */; };
 		45B80185251AD5F800405928 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B80184251AD5F800405928 /* User.swift */; };
+		45B80189251CA9D600405928 /* TableViewReloadProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B80188251CA9D600405928 /* TableViewReloadProtocol.swift */; };
 		702CDD33FB558FDFD49B5A96 /* Pods_Motivation_.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E57B94FDF73A56422D13A3A /* Pods_Motivation_.framework */; };
 /* End PBXBuildFile section */
 
@@ -57,6 +58,7 @@
 		456E43842515857000B76F5B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		456E439F2515B98100B76F5B /* ModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalViewController.swift; sourceTree = "<group>"; };
 		45B80184251AD5F800405928 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		45B80188251CA9D600405928 /* TableViewReloadProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewReloadProtocol.swift; sourceTree = "<group>"; };
 		FF088CB4627F31B4E92257AA /* Pods-Motivation+.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Motivation+.release.xcconfig"; path = "Target Support Files/Pods-Motivation+/Pods-Motivation+.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -93,6 +95,7 @@
 		4568B6FD250AF8B200131597 /* Motivation+ */ = {
 			isa = PBXGroup;
 			children = (
+				45B80187251CA9B100405928 /* Protocal */,
 				4568B716250AF8C900131597 /* Model */,
 				4568B715250AF8C700131597 /* View */,
 				4568B714250AF8C100131597 /* Controller */,
@@ -141,6 +144,14 @@
 				45B80184251AD5F800405928 /* User.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		45B80187251CA9B100405928 /* Protocal */ = {
+			isa = PBXGroup;
+			children = (
+				45B80188251CA9D600405928 /* TableViewReloadProtocol.swift */,
+			);
+			path = Protocal;
 			sourceTree = "<group>";
 		};
 		5C71E86661935FE38A78548F /* Pods */ = {
@@ -282,6 +293,7 @@
 				4548D152250B9DB400FC9CDD /* TabBarViewController.swift in Sources */,
 				4548D159250C400B00FC9CDD /* RequestTableViewCell.swift in Sources */,
 				4568B71A250AF98700131597 /* FollowerViewController.swift in Sources */,
+				45B80189251CA9D600405928 /* TableViewReloadProtocol.swift in Sources */,
 				4568B720250B60E800131597 /* SearchViewController.swift in Sources */,
 				4548D15D250C470100FC9CDD /* SearchTableViewCell.swift in Sources */,
 				4568B6FF250AF8B200131597 /* AppDelegate.swift in Sources */,
