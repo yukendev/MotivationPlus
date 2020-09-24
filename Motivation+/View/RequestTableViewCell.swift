@@ -25,7 +25,8 @@ class RequestTableViewCell: UITableViewCell {
     var user = Auth.auth().currentUser
     let storage = Storage.storage()
     
-    weak var delegate: myTableViewDelegate?
+//    weak var delegate: myTableViewDelegate?
+    var delegate: myTableViewDelegate?
     
     
     
@@ -54,22 +55,14 @@ class RequestTableViewCell: UITableViewCell {
     @IBAction func canselAction(_ sender: Any) {
         print("cansel!!!!!")
         deleteFromRequests()
-        guard let delegate = delegate else {
-            print("No Person")
-            return
-        }
-        delegate.tableViewReload()
+//        delegate?.tableViewReload()
     }
     
     @IBAction func followAction(_ sender: Any) {
         print("follow!!!!!")
         deleteFromRequests()
         follow()
-        guard let delegate = delegate else {
-            print("No Person")
-            return
-        }
-        delegate.tableViewReload()
+//        delegate?.tableViewReload()
     }
     
     func deleteFromRequests() {
@@ -81,7 +74,9 @@ class RequestTableViewCell: UITableViewCell {
                 newArray = oldArray.filter({ $0 != self.uid })
                 db.collection("users").document(myUid).updateData([
                     "requests": newArray
-                ])
+                ]) {_ in
+                    delegate?.tableViewReload()
+                }
             }
         }
     }

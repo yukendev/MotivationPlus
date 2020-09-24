@@ -34,8 +34,9 @@ class RequestViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         uid = user!.uid
 
-        let requestCell = RequestTableViewCell()
-        requestCell.delegate = self
+//        let requestCell = RequestTableViewCell()
+//        let requestView = RequestViewController()
+//        requestCell.delegate = requestView
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -61,23 +62,35 @@ class RequestViewController: UIViewController, UITableViewDelegate, UITableViewD
         cell.nameLabel.text = requestsArray[indexPath.row].name
         cell.uid = requestsArray[indexPath.row].uid
         
+        cell.delegate = self
+        
         return cell
     }
     
     func showRequests() {
         requestsArray = []
         idArray = []
-        db.collection("users").document(uid).getDocument { (snapshot, error) in
+        print("神々の祝福")
+        print(uid)
+        db.collection("users").document(uid).getDocument { [self] (snapshot, error) in
+            print("get data")
             if snapshot != nil {
+                print("not nil")
                 self.idArray = snapshot!["requests"] as! [String]
+                if idArray == [] {
+                    print("誰もいない")
+                    tableView.reloadData()
+                }
                 self.idArray.forEach { (id) in
                     self.db.collection("users").document(id).getDocument { (document, error) in
                         if document != nil {
+                            print("not nil 2")
                             let user = User()
                             user.uid = document!["uid"] as! String
                             user.name = document!["name"] as! String
                             self.requestsArray.append(user)
                             self.tableView.reloadData()
+                            print("スキャンよろしく")
                         }
                     }
                 }
@@ -88,8 +101,8 @@ class RequestViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     func tableViewReload() {
         print("reload!!!!")
-        tableView.reloadData()
+        showRequests()
+        print("after!!!")
     }
     
-
 }

@@ -6,8 +6,8 @@
 //  Copyright © 2020 手塚友健. All rights reserved.
 //
 
-import Foundation
+//import Foundation
 
-protocol myTableViewDelegate: class {
+protocol myTableViewDelegate {
     func tableViewReload()
 }
