@@ -7,6 +7,9 @@
 //
 
 import UIKit
+import FirebaseStorage
+import FirebaseAuth
+import FirebaseFirestore
 
 class RequestTableViewCell: UITableViewCell {
     
@@ -16,6 +19,11 @@ class RequestTableViewCell: UITableViewCell {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var followButton: UIButton!
     @IBOutlet weak var canselButton: UIButton!
+    var uid = String()
+    var myUid = String()
+    let db = Firestore.firestore()
+    var user = Auth.auth().currentUser
+    let storage = Storage.storage()
     
     
     
@@ -30,6 +38,7 @@ class RequestTableViewCell: UITableViewCell {
         followButton.layer.cornerRadius = 5
         canselButton.layer.cornerRadius = 5
         
+        myUid = user!.uid
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -37,5 +46,18 @@ class RequestTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
+    
+    
+    @IBAction func canselAction(_ sender: Any) {
+        print("cansel!!!!!")
+        db.collection("users").document(myUid).getDocument { (snapshot, error) in
+            <#code#>
+        }
+    }
+    
+    @IBAction func followAction(_ sender: Any) {
+        print("follow!!!!!")
+    }
+    
     
 }

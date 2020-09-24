@@ -49,6 +49,9 @@
                                 <state key="normal" title="フォロー">
                                     <color key="titleColor" systemColor="systemBackgroundColor"/>
                                 </state>
+                                <connections>
+                                    <action selector="followAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="bBi-Wf-gVJ"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IGs-yr-ng0">
                                 <rect key="frame" x="174" y="20" width="50" height="30"/>
@@ -61,6 +64,9 @@
                                 <state key="normal" title="拒否">
                                     <color key="titleColor" systemColor="systemBackgroundColor"/>
                                 </state>
+                                <connections>
+                                    <action selector="canselAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="3Hd-gb-Ucz"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemTealColor"/>

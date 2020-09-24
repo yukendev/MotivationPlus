@@ -44,6 +44,15 @@ class SearchTableViewCell: UITableViewCell {
     
     
     @IBAction func followAction(_ sender: Any) {
+        
+        addFollower()
+        
+        addRequests()
+        
+        print("come on!!!!")
+    }
+    
+    func addFollower() {
         var followerArray: [String] = []
         db.collection("users").document(myUid).getDocument { (snapshot, error) in
             if snapshot != nil {
@@ -54,8 +63,19 @@ class SearchTableViewCell: UITableViewCell {
                 ])
             }
         }
-        
-        print("come on!!!!")
+    }
+    
+    func addRequests() {
+        var requestsArray: [String] = []
+        db.collection("users").document(uid).getDocument { (snapshot, error) in
+            if snapshot != nil {
+                requestsArray = snapshot!["requests"] as! [String]
+                requestsArray.append(self.myUid)
+                self.db.collection("users").document(self.uid).updateData([
+                    "requests": requestsArray
+                ])
+            }
+        }
     }
     
 }
