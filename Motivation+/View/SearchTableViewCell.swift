@@ -45,7 +45,7 @@ class SearchTableViewCell: UITableViewCell {
     
     @IBAction func followAction(_ sender: Any) {
         
-        addFollower()
+//        addFollower()
         
         addRequests()
         

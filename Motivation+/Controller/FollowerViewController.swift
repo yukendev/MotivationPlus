@@ -51,6 +51,18 @@ class FollowerViewController: UIViewController {
         resetButton.isHidden = true
         finishButton.isHidden = true
         
+        startButton.addTarget(self, action: #selector(self.pushButton_Animation(_:)), for: .touchDown)
+        startButton.addTarget(self, action: #selector(self.separateButton_Animation(_:)), for: .touchUpInside)
+        
+        stopButton.addTarget(self, action: #selector(self.pushButton_Animation(_:)), for: .touchDown)
+        stopButton.addTarget(self, action: #selector(self.separateButton_Animation(_:)), for: .touchUpInside)
+        
+        resetButton.addTarget(self, action: #selector(self.pushButton_Animation(_:)), for: .touchDown)
+        resetButton.addTarget(self, action: #selector(self.separateButton_Animation(_:)), for: .touchUpInside)
+        
+        finishButton.addTarget(self, action: #selector(self.pushButton_Animation(_:)), for: .touchDown)
+        finishButton.addTarget(self, action: #selector(self.separateButton_Animation(_:)), for: .touchUpInside)
+        
         Auth.auth().signInAnonymously { [self] (authResult, error) in
             guard let user = authResult?.user else { return }
             let isAnonymous = user.isAnonymous  // true
@@ -251,5 +263,19 @@ class FollowerViewController: UIViewController {
         nextVC.timeText = "\(sHour):\(sMinute):\(sSecond)"
     }
     
+    
+    @objc func pushButton_Animation(_ sender: UIButton){
+        UIView.animate(withDuration: 0.1, animations:{ () -> Void in
+            sender.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
+        })
+    }
+        
+        
+    @objc func separateButton_Animation(_ sender: UIButton){
+        UIView.animate(withDuration: 0.2, animations:{ () -> Void in
+             sender.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
+             sender.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        })
+    }
 
 }
