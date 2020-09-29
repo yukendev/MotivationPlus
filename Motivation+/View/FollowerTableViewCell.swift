@@ -16,6 +16,8 @@ class FollowerTableViewCell: UITableViewCell {
     @IBOutlet weak var stateLabel: UILabel!
     @IBOutlet weak var iconImageView: UIImageView!
     
+    var uid = String()
+    
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -26,6 +28,7 @@ class FollowerTableViewCell: UITableViewCell {
         stateLabel.layer.cornerRadius = 5
         stateLabel.clipsToBounds = true
         iconImageView.layer.cornerRadius = 5
+    
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

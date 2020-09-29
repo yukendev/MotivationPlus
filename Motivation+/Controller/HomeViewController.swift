@@ -18,6 +18,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet weak var tabBar: UITabBarItem!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var requestButton: UIButton!
+    @IBOutlet weak var followerLabel: UILabel!
     
 //    let nameArray: [String] = ["増山", "春", "けんちゃん", "はるぴー"]
 //    let stateArray: [String] = ["勉強中", "休憩中", "7時間", "勉強中" ]
@@ -42,6 +43,9 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         uid = user!.uid
         
+        requestButton.addTarget(self, action: #selector(self.pushButton_Animation(_:)), for: .touchDown)
+        requestButton.addTarget(self, action: #selector(self.separateButton_Animation(_:)), for: .touchUpInside)
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -52,7 +56,15 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     @IBAction func searchAction(_ sender: Any) {
         print("pushed!!!!")
-        performSegue(withIdentifier: "search", sender: nil)
+        db.collection("users").document(uid).getDocument { [self] (snapshot, error) in
+            if snapshot != nil {
+                if snapshot!["name"] == nil {
+                    showAlert(title: "名前を設定して下さい")
+                }else{
+                    performSegue(withIdentifier: "search", sender: nil)
+                }
+            }
+        }
     }
     
     @IBAction func requestAction(_ sender: Any) {
@@ -60,6 +72,11 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if followerArray.count == 0 {
+            followerLabel.isHidden = false
+        }else{
+            followerLabel.isHidden = true
+        }
         return followerArray.count
     }
     
@@ -68,6 +85,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         let cell = tableView.dequeueReusableCell(withIdentifier: "Follower", for: indexPath) as! FollowerTableViewCell
         
         cell.selectionStyle = .none
+        cell.uid = followerArray[indexPath.row].uid
         cell.nameLabel.text = followerArray[indexPath.row].name
         switch followerArray[indexPath.row].state {
         case "studying":
@@ -80,8 +98,10 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             
         default:
             cell.stateLabel.backgroundColor = UIColor.yellow
-            cell.stateLabel.text = "うんこ"
+            cell.stateLabel.text = ""
         }
+        
+        downloadPicture(uid: followerArray[indexPath.row].uid, imageView: cell.iconImageView)
     
         
         return cell
@@ -99,8 +119,10 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                         if document != nil {
                             user.name = document!["name"] as! String
                             user.state = document!["state"] as! String
+                            user.uid = document!["uid"] as! String
                             self.followerArray.append(user)
                             self.tableView.reloadData()
+                            print("reload!!!!!!!")
                         }
                     }
                 }
@@ -108,6 +130,44 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
     }
     
+    func showAlert(title: String) {
+        let alertController = UIAlertController(title: title, message: "", preferredStyle: .alert)
+        let cansel = UIAlertAction(title: "OK", style: .cancel)
+        alertController.addAction(cansel)
+        
+        self.present(alertController, animated: true, completion: nil)
+    }
     
-
+    @objc func pushButton_Animation(_ sender: UIButton){
+        UIView.animate(withDuration: 0.1, animations:{ () -> Void in
+            sender.transform = CGAffineTransform(scaleX: 0.98, y: 0.98)
+        })
+    }
+        
+        
+    @objc func separateButton_Animation(_ sender: UIButton){
+        UIView.animate(withDuration: 0.2, animations:{ () -> Void in
+             sender.transform = CGAffineTransform(scaleX: 0.98, y: 0.98)
+             sender.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        })
+    }
+    
+    func downloadPicture(uid: String, imageView: UIImageView) {
+        print("download start")
+        let storageRef = storage.reference(forURL: "gs://motivationplus-e098a.appspot.com/")
+        let imageRef = storageRef.child("\(uid).jpg")
+        imageRef.downloadURL { (url, error) in
+            if url != nil {
+                let imageUrl:URL = url!
+                print("set start")
+                print("\(String(describing: url))")
+                imageView.sd_setImage(with: imageUrl)
+                print("set finish")
+            }else{
+                imageView.image = UIImage(named:"IMG_0509" )
+            }
+        }
+        print("download finish")
+    }
+    
 }

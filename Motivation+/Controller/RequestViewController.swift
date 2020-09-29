@@ -64,6 +64,8 @@ class RequestViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         cell.delegate = self
         
+        downloadPicture(uid: requestsArray[indexPath.row].uid, imageView: cell.iconImageView)
+        
         return cell
     }
     
@@ -89,6 +91,8 @@ class RequestViewController: UIViewController, UITableViewDelegate, UITableViewD
                             user.uid = document!["uid"] as! String
                             user.name = document!["name"] as! String
                             self.requestsArray.append(user)
+                            let uniqueArray: NSOrderedSet = NSOrderedSet(array: requestsArray)
+                            requestsArray = uniqueArray.array as! [User]
                             self.tableView.reloadData()
                             print("スキャンよろしく")
                         }
@@ -104,5 +108,24 @@ class RequestViewController: UIViewController, UITableViewDelegate, UITableViewD
         showRequests()
         print("after!!!")
     }
+    
+    func downloadPicture(uid: String, imageView: UIImageView) {
+        print("download start")
+        let storageRef = storage.reference(forURL: "gs://motivationplus-e098a.appspot.com/")
+        let imageRef = storageRef.child("\(uid).jpg")
+        imageRef.downloadURL { (url, error) in
+            if url != nil {
+                let imageUrl:URL = url!
+                print("set start")
+                print("\(String(describing: url))")
+                imageView.sd_setImage(with: imageUrl)
+                print("set finish")
+            }else{
+                imageView.image = UIImage(named:"IMG_0509" )
+            }
+        }
+        print("download finish")
+    }
+
     
 }

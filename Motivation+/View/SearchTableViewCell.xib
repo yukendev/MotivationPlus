@@ -30,7 +30,7 @@
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4nf-FZ-MYw">
-                                <rect key="frame" x="66" y="20" width="168" height="30"/>
+                                <rect key="frame" x="66" y="20" width="163" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="J56-jL-ZnH"/>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="30" id="tUW-As-1Bb"/>
@@ -40,11 +40,11 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="p2U-8C-6nz">
-                                <rect key="frame" x="242" y="20" width="70" height="30"/>
+                                <rect key="frame" x="237" y="20" width="75" height="30"/>
                                 <color key="backgroundColor" systemColor="systemYellowColor"/>
                                 <constraints>
+                                    <constraint firstAttribute="width" constant="75" id="QrG-gN-0EL"/>
                                     <constraint firstAttribute="height" constant="30" id="tgp-dV-p5D"/>
-                                    <constraint firstAttribute="width" constant="70" id="w5M-rM-7tt"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" title="フォロー">

@@ -43,6 +43,11 @@ class RequestTableViewCell: UITableViewCell {
         
         myUid = user!.uid
         
+        followButton.addTarget(self, action: #selector(self.pushButton_Animation(_:)), for: .touchDown)
+        followButton.addTarget(self, action: #selector(self.separateButton_Animation(_:)), for: .touchUpInside)
+        
+        canselButton.addTarget(self, action: #selector(self.pushButton_Animation(_:)), for: .touchDown)
+        canselButton.addTarget(self, action: #selector(self.separateButton_Animation(_:)), for: .touchUpInside)
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -62,6 +67,7 @@ class RequestTableViewCell: UITableViewCell {
         print("follow!!!!!")
         deleteFromRequests()
         follow()
+        follow2()
 //        delegate?.tableViewReload()
     }
     
@@ -86,14 +92,40 @@ class RequestTableViewCell: UITableViewCell {
         db.collection("users").document(myUid).getDocument { [self] (snapshot, error) in
             if snapshot != nil {
                 followerArray = snapshot!["followers"] as! [String]
-                followerArray.append(self.uid)
+                followerArray.append(uid)
                 db.collection("users").document(myUid).updateData([
                     "followers": followerArray
                 ])
             }
         }
-        
-        
     }
+    
+    func follow2() {
+        var followerArray: [String] = []
+        db.collection("users").document(uid).getDocument { [self] (snapshot, error) in
+            if snapshot != nil {
+                followerArray = snapshot!["followers"] as! [String]
+                followerArray.append(myUid)
+                db.collection("users").document(uid).updateData([
+                    "followers": followerArray
+                ])
+            }
+        }
+    }
+    
+    @objc func pushButton_Animation(_ sender: UIButton){
+        UIView.animate(withDuration: 0.1, animations:{ () -> Void in
+            sender.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
+        })
+    }
+        
+        
+    @objc func separateButton_Animation(_ sender: UIButton){
+        UIView.animate(withDuration: 0.2, animations:{ () -> Void in
+             sender.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
+             sender.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        })
+    }
+
     
 }

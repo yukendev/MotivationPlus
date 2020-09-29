@@ -35,6 +35,9 @@ class EditViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
         
         uid = user!.uid
         
+        editButton.addTarget(self, action: #selector(self.pushButton_Animation(_:)), for: .touchDown)
+        editButton.addTarget(self, action: #selector(self.separateButton_Animation(_:)), for: .touchUpInside)
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -143,5 +146,20 @@ class EditViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
             }
         }
         print("download finish")
+    }
+    
+    
+    @objc func pushButton_Animation(_ sender: UIButton){
+        UIView.animate(withDuration: 0.1, animations:{ () -> Void in
+            sender.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
+        })
+    }
+        
+        
+    @objc func separateButton_Animation(_ sender: UIButton){
+        UIView.animate(withDuration: 0.2, animations:{ () -> Void in
+             sender.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
+             sender.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+        })
     }
 }

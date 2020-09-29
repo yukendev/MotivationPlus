@@ -15,5 +15,7 @@ pod 'FirebaseFirestoreSwift'
 pod 'Firebase/Auth'
 pod 'Firebase/Storage'
 pod 'FirebaseUI/Storage'
+pod 'lottie-ios'
+pod ‘RKNotificationHub’
 
 end

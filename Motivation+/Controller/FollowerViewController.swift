@@ -266,14 +266,14 @@ class FollowerViewController: UIViewController {
     
     @objc func pushButton_Animation(_ sender: UIButton){
         UIView.animate(withDuration: 0.1, animations:{ () -> Void in
-            sender.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
+            sender.transform = CGAffineTransform(scaleX: 0.98, y: 0.98)
         })
     }
         
         
     @objc func separateButton_Animation(_ sender: UIButton){
         UIView.animate(withDuration: 0.2, animations:{ () -> Void in
-             sender.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
+             sender.transform = CGAffineTransform(scaleX: 0.98, y: 0.98)
              sender.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         })
     }
