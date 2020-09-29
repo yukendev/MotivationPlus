@@ -184,11 +184,12 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             if snapshot != nil {
                 requestArray = snapshot!["requests"] as! [String]
                 if requestArray.count == 0 {
-                    return
+                    hub.hideCount()
+                    hub.setCircleColor(UIColor.clear, label: UIColor.clear)
                 }else{
                     hub.setView(requestButton, andCount: Int32(requestArray.count))
                     hub.setCircleColor(UIColor.red, label: UIColor.white)
-                    requestArray = []
+                    hub.bump()
                 }
             }
         }
