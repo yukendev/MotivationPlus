@@ -10,6 +10,7 @@ import UIKit
 import FirebaseStorage
 import FirebaseAuth
 import FirebaseFirestore
+import RKNotificationHub
 
 class HomeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
@@ -23,12 +24,13 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
 //    let nameArray: [String] = ["増山", "春", "けんちゃん", "はるぴー"]
 //    let stateArray: [String] = ["勉強中", "休憩中", "7時間", "勉強中" ]
     var followerArray = [User]()
+    var requestArray = [String]()
     
     var uid = String()
     let db = Firestore.firestore()
     var user = Auth.auth().currentUser
     let storage = Storage.storage()
-    
+    let hub = RKNotificationHub()
     
 
     override func viewDidLoad() {
@@ -52,6 +54,8 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         super.viewWillAppear(animated)
         
         showFollower()
+        setBudge()
+        
     }
     
     @IBAction func searchAction(_ sender: Any) {
@@ -168,6 +172,24 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             }
         }
         print("download finish")
+    }
+    
+    func setBudge() {
+        requestArray = []
+        db.collection("users").document(uid).getDocument { [self] (snapshot, error) in
+            if error != nil {
+                print(error!)
+            }
+            if snapshot != nil {
+                requestArray = snapshot!["requests"] as! [String]
+                if requestArray.count == 0 {
+                    return
+                }else{
+                    hub.setView(requestButton, andCount: Int32(requestArray.count))
+                    hub.setCircleColor(UIColor.red, label: UIColor.white)
+                }
+            }
+        }
     }
     
 }
