@@ -114,18 +114,19 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     func showFollower() {
         var uidArray: [String] = []
         followerArray = []
-        db.collection("users").document(uid).getDocument { (snapshot, error) in
+        db.collection("users").document(uid).getDocument { [self] (snapshot, error) in
             if snapshot != nil {
                 uidArray = snapshot!["followers"] as! [String]
+                uidArray = arrayFilter(array: uidArray)
                 uidArray.forEach { (id) in
                     let user = User()
-                    self.db.collection("users").document(id).getDocument { (document, error) in
+                    self.db.collection("users").document(id).getDocument { [self] (document, error) in
                         if document != nil {
                             user.name = document!["name"] as! String
                             user.state = document!["state"] as! String
                             user.uid = document!["uid"] as! String
                             self.followerArray.append(user)
-                            self.tableView.reloadData()
+                            tableView.reloadData()
                             print("reload!!!!!!!")
                         }
                     }
@@ -187,9 +188,18 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                 }else{
                     hub.setView(requestButton, andCount: Int32(requestArray.count))
                     hub.setCircleColor(UIColor.red, label: UIColor.white)
+                    requestArray = []
                 }
             }
         }
+    }
+    
+    func arrayFilter(array: [String]) -> [String] {
+        let result = NSOrderedSet(array: array)
+        let anyArray = result.array
+        let resultArray: [String] = anyArray.map {$0 as! String}
+        
+        return resultArray
     }
     
 }

@@ -11,6 +11,12 @@ import FirebaseStorage
 import FirebaseAuth
 import FirebaseFirestore
 
+//extension Array where Element: User {
+//    func unique() -> [Element] {
+//        return NSOrderedSet(array: self).array as! [Element]
+//    }
+//}
+
 class RequestViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, myTableViewDelegate {
     
     @IBOutlet weak var tableView: UITableView!
@@ -23,7 +29,6 @@ class RequestViewController: UIViewController, UITableViewDelegate, UITableViewD
     var user = Auth.auth().currentUser
     let storage = Storage.storage()
     
-
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -41,7 +46,6 @@ class RequestViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         showRequests()
     }
 
@@ -82,6 +86,11 @@ class RequestViewController: UIViewController, UITableViewDelegate, UITableViewD
                 if idArray == [] {
                     print("誰もいない")
                     tableView.reloadData()
+                    return
+                }else{
+                    print("厳選前：　\(idArray)")
+                    idArray = arrayFilter(array: idArray)
+                    print("厳選後：　\(idArray)")
                 }
                 self.idArray.forEach { (id) in
                     self.db.collection("users").document(id).getDocument { (document, error) in
@@ -91,8 +100,7 @@ class RequestViewController: UIViewController, UITableViewDelegate, UITableViewD
                             user.uid = document!["uid"] as! String
                             user.name = document!["name"] as! String
                             self.requestsArray.append(user)
-                            let uniqueArray: NSOrderedSet = NSOrderedSet(array: requestsArray)
-                            requestsArray = uniqueArray.array as! [User]
+                            print("厳選前：　\(requestsArray)")
                             self.tableView.reloadData()
                             print("スキャンよろしく")
                         }
@@ -126,6 +134,13 @@ class RequestViewController: UIViewController, UITableViewDelegate, UITableViewD
         }
         print("download finish")
     }
-
+    
+    func arrayFilter(array: [String]) -> [String] {
+        let result = NSOrderedSet(array: array)
+        let anyArray = result.array
+        let resultArray: [String] = anyArray.map {$0 as! String}
+        
+        return resultArray
+    }
     
 }

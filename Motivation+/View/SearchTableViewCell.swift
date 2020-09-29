@@ -21,6 +21,7 @@ class SearchTableViewCell: UITableViewCell {
     var myUid = String()
     var user = Auth.auth().currentUser
     let db = Firestore.firestore()
+    var requestArray = [String]()
     
     var delegate: myTableViewDelegate?
     
@@ -51,9 +52,7 @@ class SearchTableViewCell: UITableViewCell {
     @IBAction func followAction(_ sender: Any) {
         
 //        addFollower()
-        
-        addRequests()
-        
+        searchRequest()
         print("come on!!!!")
     }
     
@@ -85,6 +84,22 @@ class SearchTableViewCell: UITableViewCell {
         }
     }
     
+    func deleteFromRequests() {
+        var oldArray: [String] = []
+        var newArray: [String] = []
+        db.collection("users").document(myUid).getDocument { [self] (snapshot, error) in
+            if snapshot != nil {
+                oldArray = snapshot!["requests"] as! [String]
+                newArray = oldArray.filter({ $0 != self.uid })
+                db.collection("users").document(myUid).updateData([
+                    "requests": newArray
+                ]) {_ in
+                    delegate?.tableViewReload()
+                }
+            }
+        }
+    }
+    
     @objc func pushButton_Animation(_ sender: UIButton){
         UIView.animate(withDuration: 0.1, animations:{ () -> Void in
             sender.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
@@ -98,4 +113,47 @@ class SearchTableViewCell: UITableViewCell {
              sender.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         })
     }
+    
+    func searchRequest() {
+        requestArray = []
+        db.collection("users").document(myUid).getDocument { [self] (snapshot, error) in
+            if snapshot != nil {
+                requestArray = snapshot!["requests"] as! [String]
+                if requestArray.contains(uid) {
+                    deleteFromRequests()
+                    follow()
+                    follow2()
+                }else{
+                    addRequests()
+                }
+            }
+        }
+    }
+    
+    func follow() {
+        var followerArray: [String] = []
+        db.collection("users").document(myUid).getDocument { [self] (snapshot, error) in
+            if snapshot != nil {
+                followerArray = snapshot!["followers"] as! [String]
+                followerArray.append(uid)
+                db.collection("users").document(myUid).updateData([
+                    "followers": followerArray
+                ])
+            }
+        }
+    }
+    
+    func follow2() {
+        var followerArray: [String] = []
+        db.collection("users").document(uid).getDocument { [self] (snapshot, error) in
+            if snapshot != nil {
+                followerArray = snapshot!["followers"] as! [String]
+                followerArray.append(myUid)
+                db.collection("users").document(uid).updateData([
+                    "followers": followerArray
+                ])
+            }
+        }
+    }
+    
 }
