@@ -231,7 +231,7 @@ class FollowerViewController: UIViewController {
         var sMinute = String(format:"%02d", minute)
         var sHour = String(format:"%02d", hour)
         db.collection("users").document(uid).updateData([
-            "state": "not studying",
+            "state": "finish",
             "studyTime": "\(sHour):\(sMinute):\(sSecond)"
         ])
         performSegue(withIdentifier: "modal", sender: nil)

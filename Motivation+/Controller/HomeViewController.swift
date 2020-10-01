@@ -99,10 +99,16 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             cell.stateLabel.backgroundColor = UIColor.green
             cell.stateLabel.text = "休憩中"
             cell.showAnimation(state: "not studying", speed: 1.0)
+        case "finish":
+            print("勉強終わったよ")
+            cell.stateLabel.isHidden = false
+            cell.stateLabel.backgroundColor = UIColor.blue
+            cell.stateLabel.text = "終了"
+            cell.showAnimation(state: "finish", speed: 1.0)
         default:
             print("例外")
             cell.stateLabel.backgroundColor = UIColor.yellow
-            cell.stateLabel.text = ""
+            cell.stateLabel.text = "エラー"
         }
         
         downloadPicture(uid: followerArray[indexPath.row].uid, imageView: cell.iconImageView)
