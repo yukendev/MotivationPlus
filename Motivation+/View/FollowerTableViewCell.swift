@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Lottie
 
 class FollowerTableViewCell: UITableViewCell {
     
@@ -15,6 +16,10 @@ class FollowerTableViewCell: UITableViewCell {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var stateLabel: UILabel!
     @IBOutlet weak var iconImageView: UIImageView!
+    @IBOutlet weak var animationContainer: LottieView!
+    
+    var animationView = AnimationView()
+    
     
     var uid = String()
     
@@ -28,6 +33,7 @@ class FollowerTableViewCell: UITableViewCell {
         stateLabel.layer.cornerRadius = 5
         stateLabel.clipsToBounds = true
         iconImageView.layer.cornerRadius = 5
+        animationContainer.backgroundColor = UIColor.clear
     
     }
 
@@ -35,6 +41,27 @@ class FollowerTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+    }
+    
+    
+    func showAnimation(state: String, speed: Double) {
+        print("アニメーション！！！！！")
+        animationView.removeFromSuperview()
+        switch state {
+        case "studying":
+            animationView = AnimationView(name: "run")
+        case "not studying":
+            animationView = AnimationView(name: "sleep")
+        case "finish":
+            animationView = AnimationView(name: "finish")
+        default:
+            print("default")
+        }
+        animationView.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
+        animationView.loopMode = .loop
+        animationView.animationSpeed = CGFloat(speed)
+        animationContainer.addSubview(animationView)
+        animationView.play()
     }
     
 }

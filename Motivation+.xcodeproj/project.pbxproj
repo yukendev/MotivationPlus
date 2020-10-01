@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4544073C2525E78F000500C2 /* run.json in Resources */ = {isa = PBXBuildFile; fileRef = 4544073B2525E78E000500C2 /* run.json */; };
+		4544073F2525EFD3000500C2 /* finish.json in Resources */ = {isa = PBXBuildFile; fileRef = 4544073E2525EFD3000500C2 /* finish.json */; };
 		4548D152250B9DB400FC9CDD /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4548D151250B9DB400FC9CDD /* TabBarViewController.swift */; };
 		4548D155250C370F00FC9CDD /* FollowerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4548D153250C370F00FC9CDD /* FollowerTableViewCell.swift */; };
 		4548D156250C370F00FC9CDD /* FollowerTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4548D154250C370F00FC9CDD /* FollowerTableViewCell.xib */; };
@@ -27,6 +29,7 @@
 		456E43822514E45300B76F5B /* EditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456E43812514E45300B76F5B /* EditViewController.swift */; };
 		456E43852515857000B76F5B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 456E43842515857000B76F5B /* GoogleService-Info.plist */; };
 		456E43A02515B98100B76F5B /* ModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456E439F2515B98100B76F5B /* ModalViewController.swift */; };
+		459AA28C2525CF0D00675EFC /* sleep.json in Resources */ = {isa = PBXBuildFile; fileRef = 459AA28B2525CF0D00675EFC /* sleep.json */; };
 		45B80185251AD5F800405928 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B80184251AD5F800405928 /* User.swift */; };
 		45B80189251CA9D600405928 /* TableViewReloadProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B80188251CA9D600405928 /* TableViewReloadProtocol.swift */; };
 		702CDD33FB558FDFD49B5A96 /* Pods_Motivation_.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E57B94FDF73A56422D13A3A /* Pods_Motivation_.framework */; };
@@ -35,6 +38,8 @@
 /* Begin PBXFileReference section */
 		27B883F4F2557D085951D8B5 /* Pods-Motivation+.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Motivation+.debug.xcconfig"; path = "Target Support Files/Pods-Motivation+/Pods-Motivation+.debug.xcconfig"; sourceTree = "<group>"; };
 		3E57B94FDF73A56422D13A3A /* Pods_Motivation_.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Motivation_.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4544073B2525E78E000500C2 /* run.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = run.json; sourceTree = "<group>"; };
+		4544073E2525EFD3000500C2 /* finish.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = finish.json; sourceTree = "<group>"; };
 		4548D151250B9DB400FC9CDD /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		4548D153250C370F00FC9CDD /* FollowerTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowerTableViewCell.swift; sourceTree = "<group>"; };
 		4548D154250C370F00FC9CDD /* FollowerTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FollowerTableViewCell.xib; sourceTree = "<group>"; };
@@ -57,6 +62,7 @@
 		456E43812514E45300B76F5B /* EditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditViewController.swift; sourceTree = "<group>"; };
 		456E43842515857000B76F5B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		456E439F2515B98100B76F5B /* ModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalViewController.swift; sourceTree = "<group>"; };
+		459AA28B2525CF0D00675EFC /* sleep.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sleep.json; sourceTree = "<group>"; };
 		45B80184251AD5F800405928 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		45B80188251CA9D600405928 /* TableViewReloadProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewReloadProtocol.swift; sourceTree = "<group>"; };
 		FF088CB4627F31B4E92257AA /* Pods-Motivation+.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Motivation+.release.xcconfig"; path = "Target Support Files/Pods-Motivation+/Pods-Motivation+.release.xcconfig"; sourceTree = "<group>"; };
@@ -95,6 +101,7 @@
 		4568B6FD250AF8B200131597 /* Motivation+ */ = {
 			isa = PBXGroup;
 			children = (
+				459AA2872525CED700675EFC /* Animation */,
 				45B80187251CA9B100405928 /* Protocal */,
 				4568B716250AF8C900131597 /* Model */,
 				4568B715250AF8C700131597 /* View */,
@@ -144,6 +151,16 @@
 				45B80184251AD5F800405928 /* User.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		459AA2872525CED700675EFC /* Animation */ = {
+			isa = PBXGroup;
+			children = (
+				459AA28B2525CF0D00675EFC /* sleep.json */,
+				4544073B2525E78E000500C2 /* run.json */,
+				4544073E2525EFD3000500C2 /* finish.json */,
+			);
+			path = Animation;
 			sourceTree = "<group>";
 		};
 		45B80187251CA9B100405928 /* Protocal */ = {
@@ -234,10 +251,13 @@
 				4568B70D250AF8B600131597 /* LaunchScreen.storyboard in Resources */,
 				4548D15A250C400B00FC9CDD /* RequestTableViewCell.xib in Resources */,
 				4568B70A250AF8B600131597 /* Assets.xcassets in Resources */,
+				4544073C2525E78F000500C2 /* run.json in Resources */,
 				4568B708250AF8B200131597 /* Main.storyboard in Resources */,
 				4548D156250C370F00FC9CDD /* FollowerTableViewCell.xib in Resources */,
+				459AA28C2525CF0D00675EFC /* sleep.json in Resources */,
 				4548D15E250C470100FC9CDD /* SearchTableViewCell.xib in Resources */,
 				456E43852515857000B76F5B /* GoogleService-Info.plist in Resources */,
+				4544073F2525EFD3000500C2 /* finish.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

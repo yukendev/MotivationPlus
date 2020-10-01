@@ -19,12 +19,12 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet weak var tabBar: UITabBarItem!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var requestButton: UIButton!
-    @IBOutlet weak var followerLabel: UILabel!
     
 //    let nameArray: [String] = ["増山", "春", "けんちゃん", "はるぴー"]
 //    let stateArray: [String] = ["勉強中", "休憩中", "7時間", "勉強中" ]
     var followerArray = [User]()
     var requestArray = [String]()
+    var uidArray = [String]()
     
     var uid = String()
     let db = Firestore.firestore()
@@ -76,11 +76,6 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if followerArray.count == 0 {
-            followerLabel.isHidden = false
-        }else{
-            followerLabel.isHidden = true
-        }
         return followerArray.count
     }
     
@@ -93,14 +88,19 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         cell.nameLabel.text = followerArray[indexPath.row].name
         switch followerArray[indexPath.row].state {
         case "studying":
+            print("勉強中")
             cell.stateLabel.isHidden = false
             cell.stateLabel.backgroundColor = UIColor.orange
             cell.stateLabel.text = "勉強中"
+            cell.showAnimation(state: "studying", speed: 2.5)
         case "not studying":
-//            cell.stateLabel.backgroundColor = UIColor.green
-            cell.stateLabel.isHidden = true
-            
+            print("勉強してないよ")
+            cell.stateLabel.isHidden = false
+            cell.stateLabel.backgroundColor = UIColor.green
+            cell.stateLabel.text = "休憩中"
+            cell.showAnimation(state: "not studying", speed: 1.0)
         default:
+            print("例外")
             cell.stateLabel.backgroundColor = UIColor.yellow
             cell.stateLabel.text = ""
         }
@@ -111,8 +111,29 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         return cell
     }
     
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        
+        
+        let deleteAction = UIContextualAction(style: .destructive, title:"フォロー解除") { [self]
+            (ctxAction, view, completionHandler) in
+            print(indexPath.row)
+            showAlert2(title: "フォローを解除しますか", path: indexPath.row)
+//            self.deleteFollower(path: indexPath.row)
+            completionHandler(true)
+        }
+        deleteAction.backgroundColor = UIColor.red
+        
+
+        
+        let swipeAction = UISwipeActionsConfiguration(actions:[deleteAction])
+        swipeAction.performsFirstActionWithFullSwipe = false
+        
+        return swipeAction
+    }
+    
     func showFollower() {
-        var uidArray: [String] = []
+        uidArray = []
         followerArray = []
         db.collection("users").document(uid).getDocument { [self] (snapshot, error) in
             if snapshot != nil {
@@ -131,6 +152,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                         }
                     }
                 }
+                tableView.reloadData()
             }
         }
     }
@@ -141,6 +163,22 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         alertController.addAction(cansel)
         
         self.present(alertController, animated: true, completion: nil)
+    }
+    
+    func showAlert2(title: String, path: Int) {
+        let alertController = UIAlertController(title: title, message: "", preferredStyle: .alert)
+        let action1 = UIAlertAction(title: "はい", style: .default) { (alert) in
+            self.okAction(path: path)
+        }
+        let cansel = UIAlertAction(title: "いいえ", style: .cancel)
+        alertController.addAction(cansel)
+        alertController.addAction(action1)
+        
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
+    func okAction(path: Int) {
+        deleteFollower(path: path)
     }
     
     @objc func pushButton_Animation(_ sender: UIButton){
@@ -202,5 +240,46 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         return resultArray
     }
+    
+    func deleteFollower(path: Int) {
+        
+        var oldArray: [String] = []
+        var newArray: [String] = []
+        db.collection("users").document(uid).getDocument { [self] (snapshot, error) in
+            if snapshot != nil {
+                oldArray = snapshot!["followers"] as! [String]
+                let deletedUid = uidArray[path]
+                oldArray.forEach { (uid) in
+                    if uid != deletedUid {
+                        newArray.append(uid)
+                    }
+                }
+            }
+        }
+        db.collection("users").document(uid).updateData([
+            "followers": newArray
+        ])
+        
+        oldArray = []
+        newArray = []
+        db.collection("users").document(uidArray[path]).getDocument { [self] (snapshot, error) in
+            if snapshot != nil {
+                oldArray = snapshot!["followers"] as! [String]
+                let deletedUid = uid
+                oldArray.forEach { (uid) in
+                    if uid != deletedUid {
+                        newArray.append(uid)
+                    }
+                }
+            }
+        }
+        db.collection("users").document(uidArray[path]).updateData([
+            "followers": newArray
+        ]){_ in
+            self.showFollower()
+        }
+    }
+    
+    
     
 }
