@@ -102,8 +102,9 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         case "finish":
             print("勉強終わったよ")
             cell.stateLabel.isHidden = false
-            cell.stateLabel.backgroundColor = UIColor.blue
-            cell.stateLabel.text = "終了"
+            cell.stateLabel.backgroundColor = UIColor.white
+            cell.stateLabel.text = followerArray[indexPath.row].studyTime.prefix(2) + "時間"
+//            cell.stateLabel.tintColor = UIColor.white
             cell.showAnimation(state: "finish", speed: 1.0)
         default:
             print("例外")
@@ -152,6 +153,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                             user.name = document!["name"] as! String
                             user.state = document!["state"] as! String
                             user.uid = document!["uid"] as! String
+                            user.studyTime = document!["studyTime"] as! String
                             self.followerArray.append(user)
                             tableView.reloadData()
                             print("reload!!!!!!!")

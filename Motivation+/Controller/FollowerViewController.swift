@@ -81,7 +81,8 @@ class FollowerViewController: UIViewController {
                         "userId":"@" + uid.prefix(5),
                         "state": "not studying",
                         "followers": [],
-                        "requests": []
+                        "requests": [],
+                        "studyTime": []
                     ]) { err in
                         if let err = err {
                             print("Error writing document: \(err)")
