@@ -9,6 +9,7 @@
 import UIKit
 import FirebaseAuth
 import FirebaseFirestore
+import Lottie
 
 class FollowerViewController: UIViewController {
     
@@ -62,6 +63,8 @@ class FollowerViewController: UIViewController {
         
         finishButton.addTarget(self, action: #selector(self.pushButton_Animation(_:)), for: .touchDown)
         finishButton.addTarget(self, action: #selector(self.separateButton_Animation(_:)), for: .touchUpInside)
+        
+        
         
         Auth.auth().signInAnonymously { [self] (authResult, error) in
             guard let user = authResult?.user else { return }
