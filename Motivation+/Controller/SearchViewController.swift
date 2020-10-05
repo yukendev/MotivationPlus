@@ -88,12 +88,18 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         return cell
     }
     
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        print("search")
+//    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+//        print("search")
+//        if searchBar.text != nil {
+//            search(text: searchBar.text!)
+//        }
+//        searchBar.endEditing(true)
+//    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchBar.text != nil {
             search(text: searchBar.text!)
         }
-        searchBar.endEditing(true)
     }
     
     func search(text: String) {
@@ -103,7 +109,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         if searchBar.text == "" || searchBar.text == "@" {
             return
         }
-        db.collection("users").getDocuments { (snapshot, error) in
+        db.collection("users").getDocuments { [self] (snapshot, error) in
             if error != nil {
                 print(error!)
             }else{
@@ -123,7 +129,10 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
                         if text.prefix(1) != "@" {
                             text = "@" + text
                         }
-                        if (userId.contains(text) || smallUserId.contains(text)) && uid != self.myUid {
+                        if smallUserId.contains(text.lowercased()) && uid != self.myUid {
+                            if userArray.count >= 10 {
+                                return
+                            }
                             print("lol")
                             print(smallUserId)
                             let user = User()
@@ -132,6 +141,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
                             user.userId = userId
                             self.userArray.append(user)
                             self.tableView.reloadData()
+                            
                         }
                     }
                 }

@@ -44,18 +44,47 @@ class FollowerTableViewCell: UITableViewCell {
     }
     
     
-    func showAnimation(state: String, speed: Double) {
+    func showAnimation(state: String, speed: Double, login: Int) {
         print("アニメーション！！！！！")
+        if login != 0 {
+            print("あんまログインしてないやつ")
+            animationContainer.isHidden = false
+            stateLabel.isHidden = false
+            stateLabel.text = String(login) + "日前"
+            stateLabel.font = stateLabel.font.withSize(15)
+            stateLabel.backgroundColor = UIColor.clear
+            print(String(login) + "日前")
+            return
+        }
         animationView.removeFromSuperview()
         switch state {
         case "studying":
+            print("勉強しています")
+            animationContainer.isHidden = false
             animationView = AnimationView(name: "run")
+            stateLabel.backgroundColor = UIColor.orange
+            stateLabel.text = "勉強中"
         case "not studying":
+            print("休憩しています")
+            animationContainer.isHidden = false
             animationView = AnimationView(name: "sleep")
+            stateLabel.backgroundColor = UIColor.green
+            stateLabel.text = "休憩中"
         case "finish":
+            print("終了しています")
+            animationContainer.isHidden = false
             animationView = AnimationView(name: "finish")
+            stateLabel.backgroundColor = UIColor.white
+        case "timeout":
+            print("タイムアウトしています")
+            animationContainer.isHidden = true
+            stateLabel.isHidden = true
+            stateLabel.backgroundColor = UIColor.white
         default:
             print("default")
+//            animationContainer.isHidden = true
+//            loginLabel.isHidden = true
+            
             return
         }
         animationView.frame = CGRect(x: 0, y: 0, width: 40, height: 40)

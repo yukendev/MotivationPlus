@@ -412,8 +412,7 @@ class FollowerViewController: UIViewController {
             }
             
             db.collection("users").document(uid).updateData([
-                "state": "timeout",
-                "studyTime": ""
+                "state": "timeout"
             ])
         }else{
             print("まだ24時間たってません")

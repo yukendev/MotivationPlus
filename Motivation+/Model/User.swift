@@ -14,4 +14,5 @@ class User {
     var userId = String()
     var state = String()
     var studyTime = String()
+    var lastLogin = Int()
 }

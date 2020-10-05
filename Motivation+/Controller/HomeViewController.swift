@@ -88,25 +88,35 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         switch followerArray[indexPath.row].state {
         case "studying":
             print("勉強中")
-            cell.stateLabel.isHidden = false
-            cell.stateLabel.backgroundColor = UIColor.orange
-            cell.stateLabel.text = "勉強中"
-            cell.showAnimation(state: "studying", speed: 2.5)
+//            cell.stateLabel.backgroundColor = UIColor.orange
+//            cell.stateLabel.text = "勉強中"
+            cell.showAnimation(state: "studying", speed: 2.5, login: followerArray[indexPath.row].lastLogin)
         case "not studying":
             print("勉強してないよ")
-            cell.stateLabel.isHidden = false
-            cell.stateLabel.backgroundColor = UIColor.green
-            cell.stateLabel.text = "休憩中"
-            cell.showAnimation(state: "not studying", speed: 1.0)
+//            cell.stateLabel.backgroundColor = UIColor.green
+//            cell.stateLabel.text = "休憩中"
+            cell.showAnimation(state: "not studying", speed: 1.0, login: followerArray[indexPath.row].lastLogin)
         case "finish":
             print("勉強終わったよ")
-            cell.stateLabel.isHidden = false
-            cell.stateLabel.backgroundColor = UIColor.white
+//            cell.stateLabel.backgroundColor = UIColor.white
             cell.stateLabel.text = followerArray[indexPath.row].studyTime.prefix(2) + "時間"
-            cell.showAnimation(state: "finish", speed: 1.0)
+            cell.showAnimation(state: "finish", speed: 1.0, login: followerArray[indexPath.row].lastLogin)
+        case "timeout":
+            print("タイムアウトです")
+//            cell.stateLabel.backgroundColor = UIColor.white
+//            cell.loginLabel.text = "うんこ"
+//            cell.loginLabel.isHidden = false
+            cell.stateLabel.text = followerArray[indexPath.row].studyTime.prefix(2) + "時間"
+            cell.showAnimation(state: "finish", speed: 1.0, login: followerArray[indexPath.row].lastLogin)
         default:
             print("例外")
-            cell.stateLabel.isHidden = true
+//            cell.loginLabel.isHidden = false
+//            cell.loginLabel.text = String(followerArray[indexPath.row].lastLogin) + ""
+//            cell.showAnimation(state: "timeout", speed: 0, login: followerArray[indexPath.row].lastLogin)
+//            cell.stateLabel.isHidden = false
+//            cell.stateLabel.backgroundColor = UIColor.white
+//            cell.stateLabel.text = followerArray[indexPath.row].studyTime.prefix(2) + "時間"
+
         }
         
         downloadPicture(uid: followerArray[indexPath.row].uid, imageView: cell.iconImageView)
@@ -147,10 +157,20 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                     let user = User()
                     self.db.collection("users").document(id).getDocument { [self] (document, error) in
                         if document != nil {
+                            let dateFormatter = DateFormatter()
+                            dateFormatter.dateFormat = "yyyy/MM/dd HH:mm:ss"
+                            var lastLogin = 0
+                            if snapshot!["lastTime"] != nil {
+                                let lastTime = dateFormatter.date(from: snapshot!["lastTime"] as! String)
+                                lastLogin = Int(lastTime!.daysFrom())
+                                print("こいつ全然ログインしてねぇぞ！　\(lastLogin)日前だ！！")
+                            }
+                            
                             user.name = document!["name"] as! String
                             user.state = document!["state"] as! String
                             user.uid = document!["uid"] as! String
                             user.studyTime = document!["studyTime"] as! String
+                            user.lastLogin = lastLogin
                             self.followerArray.append(user)
                             tableView.reloadData()
                             print("reload!!!!!!!")
