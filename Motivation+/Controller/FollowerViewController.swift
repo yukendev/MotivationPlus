@@ -80,6 +80,7 @@ class FollowerViewController: UIViewController {
                 "uid": uid,
                 "userId":"@" + uid.prefix(5)
             ]) { err in
+                screenActive()
                 if err != nil {
                     db.collection("users").document(uid).setData([
                         "uid": uid,
@@ -98,35 +99,7 @@ class FollowerViewController: UIViewController {
                 } else {
                     print("Document successfully written!")
                 }
-                db.collection("users").document(uid).getDocument { (snapshot, error) in
-                    if snapshot != nil {
-                        switch snapshot!["state"] as! String {
-                        case "studying":
-                            startButton.isHidden = true
-                            stopButton.isHidden = false
-                            resetButton.isHidden = true
-                            finishButton.isHidden = true
-                        case "not studying":
-                            startButton.isHidden = false
-                            stopButton.isHidden = true
-                            resetButton.isHidden = false
-                            finishButton.isHidden = false
-                        case "finish":
-                            startButton.isHidden = false
-                            stopButton.isHidden = true
-                            resetButton.isHidden = true
-                            finishButton.isHidden = true
-                        default:
-                            startButton.isHidden = false
-                            stopButton.isHidden = true
-                            resetButton.isHidden = true
-                            finishButton.isHidden = true
-                        }
-                    }
-                }
             }
-            
-            
         }
         
         let notificationCenter = NotificationCenter.default
@@ -151,33 +124,9 @@ class FollowerViewController: UIViewController {
         print("ぷないぷない")
         
         if uid != "" {
-            db.collection("users").document(uid).getDocument { [self] (snapshot, error) in
-                if snapshot != nil {
-                    switch snapshot!["state"] as! String {
-                    case "studying":
-                        startButton.isHidden = true
-                        stopButton.isHidden = false
-                        resetButton.isHidden = true
-                        finishButton.isHidden = true
-                        showTimer()
-                    case "not studying":
-                        startButton.isHidden = false
-                        stopButton.isHidden = true
-                        resetButton.isHidden = false
-                        finishButton.isHidden = false
-                    case "finish":
-                        startButton.isHidden = false
-                        stopButton.isHidden = true
-                        resetButton.isHidden = true
-                        finishButton.isHidden = true
-                    default:
-                        startButton.isHidden = false
-                        stopButton.isHidden = true
-                        resetButton.isHidden = true
-                        finishButton.isHidden = true
-                    }
-                }
-            }
+            screenActive()
+        }else{
+            print("uidが空白です")
         }
         
         
@@ -360,33 +309,7 @@ class FollowerViewController: UIViewController {
         })
     }
     
-    
-    @IBAction func saveAction(_ sender: Any) {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy/MM/dd HH:mm:ss"
-        db.collection("users").document(uid).updateData([
-            "lastTime": dateFormatter.string(from: Date())
-        ])
-    }
-    
-    @IBAction func hikakuAction(_ sender: Any) {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy/MM/dd HH:mm:ss"
-        db.collection("users").document(uid).getDocument { (snapshot, error) in
-            if snapshot != nil {
-                let now = dateFormatter.date(from: snapshot!["lastTime"] as! String)
-                let second = now!.secondsFrom()
-                let minute = now!.minutesFrom()
-                let hour = now!.hoursFrom()
-                print("これが人類の答えだ")
-                print("秒数: \(second)")
-                print("分数: \(minute)")
-                print("時数: \(hour)")
-                
-            }
-        }
-    }
-    
+   
     func saveTimer() {
         db.collection("users").document(uid).updateData([
             "timer": "\(String(describing: hourLabel.text!)):\(String(describing: minuteLabel.text!)):\(String(describing: secondLabel.text!))"
@@ -409,13 +332,13 @@ class FollowerViewController: UIViewController {
                 let dbMinute = Int(timerArray[1])
                 let dbHour = Int(timerArray[0])
 
-                let now = dateFormatter.date(from: snapshot!["lastTime"] as! String)
-                let diffSecond = Int(now!.secondsFrom())
-                let diffMinute = Int(now!.minutesFrom())
-                let diffHour = Int(now!.hoursFrom())
+                let lastTime = dateFormatter.date(from: snapshot!["lastTime"] as! String)
+                let diffSecond = Int(lastTime!.secondsFrom())
+//                let diffMinute = Int(lastTime!.minutesFrom())
+//                let diffHour = Int(lastTime!.hoursFrom())
 
-                var timerHour = dbHour! + diffHour
-                var timerMinute = dbMinute! + diffMinute
+                var timerHour = dbHour!
+                var timerMinute = dbMinute!
                 var timerSecond = dbSecond! + diffSecond
 
                 if timerSecond > 59 {
@@ -442,6 +365,36 @@ class FollowerViewController: UIViewController {
                 if !timer.isValid {
                     timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(startTimer), userInfo: nil, repeats: true)
                     print("showTimer完了")
+                }
+            }
+        }
+    }
+    
+    func screenActive() {
+        db.collection("users").document(uid).getDocument { [self] (snapshot, error) in
+            if snapshot != nil {
+                switch snapshot!["state"] as! String {
+                case "studying":
+                    startButton.isHidden = true
+                    stopButton.isHidden = false
+                    resetButton.isHidden = true
+                    finishButton.isHidden = true
+                    showTimer()
+                case "not studying":
+                    startButton.isHidden = false
+                    stopButton.isHidden = true
+                    resetButton.isHidden = false
+                    finishButton.isHidden = false
+                case "finish":
+                    startButton.isHidden = false
+                    stopButton.isHidden = true
+                    resetButton.isHidden = true
+                    finishButton.isHidden = true
+                default:
+                    startButton.isHidden = false
+                    stopButton.isHidden = true
+                    resetButton.isHidden = true
+                    finishButton.isHidden = true
                 }
             }
         }
