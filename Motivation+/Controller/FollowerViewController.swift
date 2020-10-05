@@ -25,6 +25,7 @@ class FollowerViewController: UIViewController {
     
     
     
+    
     var timer = Timer()
     var second: Int = 0
     var minute: Int = 0
@@ -32,6 +33,8 @@ class FollowerViewController: UIViewController {
     
     var uid = String()
     let db = Firestore.firestore()
+    
+    var animationView = AnimationView()
     
 
     override func viewDidLoad() {
@@ -64,14 +67,13 @@ class FollowerViewController: UIViewController {
         finishButton.addTarget(self, action: #selector(self.pushButton_Animation(_:)), for: .touchDown)
         finishButton.addTarget(self, action: #selector(self.separateButton_Animation(_:)), for: .touchUpInside)
         
-        
-        
         Auth.auth().signInAnonymously { [self] (authResult, error) in
             guard let user = authResult?.user else { return }
             let isAnonymous = user.isAnonymous  // true
             let uidString = user.uid
             print(isAnonymous)
             print(uidString)
+            print("匿名ログイン完了")
             self.uid = uidString
             
             db.collection("users").document(uid).updateData([
@@ -96,10 +98,42 @@ class FollowerViewController: UIViewController {
                 } else {
                     print("Document successfully written!")
                 }
+                db.collection("users").document(uid).getDocument { (snapshot, error) in
+                    if snapshot != nil {
+                        switch snapshot!["state"] as! String {
+                        case "studying":
+                            startButton.isHidden = true
+                            stopButton.isHidden = false
+                            resetButton.isHidden = true
+                            finishButton.isHidden = true
+                        case "not studying":
+                            startButton.isHidden = false
+                            stopButton.isHidden = true
+                            resetButton.isHidden = false
+                            finishButton.isHidden = false
+                        case "finish":
+                            startButton.isHidden = false
+                            stopButton.isHidden = true
+                            resetButton.isHidden = true
+                            finishButton.isHidden = true
+                        default:
+                            startButton.isHidden = false
+                            stopButton.isHidden = true
+                            resetButton.isHidden = true
+                            finishButton.isHidden = true
+                        }
+                    }
+                }
             }
             
             
         }
+        
+        let notificationCenter = NotificationCenter.default
+        
+        notificationCenter.addObserver(self, selector: #selector(self.onDidBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
+        
+        notificationCenter.addObserver(self, selector: #selector(self.willResignActiveNotification), name: UIApplication.willResignActiveNotification, object: nil)
         
         print("ViewDidLoad Finish")
 
@@ -109,6 +143,50 @@ class FollowerViewController: UIViewController {
         super.viewWillAppear(animated)
         
         print("ViewWillAppear Start")
+    }
+    
+    @objc func onDidBecomeActive() {
+        print("ぷないぷない")
+        print(uid != "")
+        print("ぷないぷない")
+        
+        if uid != "" {
+            db.collection("users").document(uid).getDocument { [self] (snapshot, error) in
+                if snapshot != nil {
+                    switch snapshot!["state"] as! String {
+                    case "studying":
+                        startButton.isHidden = true
+                        stopButton.isHidden = false
+                        resetButton.isHidden = true
+                        finishButton.isHidden = true
+                        showTimer()
+                    case "not studying":
+                        startButton.isHidden = false
+                        stopButton.isHidden = true
+                        resetButton.isHidden = false
+                        finishButton.isHidden = false
+                    case "finish":
+                        startButton.isHidden = false
+                        stopButton.isHidden = true
+                        resetButton.isHidden = true
+                        finishButton.isHidden = true
+                    default:
+                        startButton.isHidden = false
+                        stopButton.isHidden = true
+                        resetButton.isHidden = true
+                        finishButton.isHidden = true
+                    }
+                }
+            }
+        }
+        
+        
+        
+    }
+    
+    @objc func willResignActiveNotification() {
+        print("ぷないぷない終了")
+        saveTimer()
     }
     
     
@@ -127,16 +205,16 @@ class FollowerViewController: UIViewController {
                         "state": "studying",
                         "studyTime": ""
                     ])
-                    
+
                     if !timer.isValid {
                         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(startTimer), userInfo: nil, repeats: true)
                     }
-                    
+
                     startButton.isHidden = true
                     stopButton.isHidden = false
                     resetButton.isHidden = true
                     finishButton.isHidden = true
-                    
+
                 }
                 } else {
                     print("Document does not exist")
@@ -151,7 +229,7 @@ class FollowerViewController: UIViewController {
         if timer.isValid {
             timer.invalidate()
         }
-        
+
         startButton.isHidden = false
         stopButton.isHidden = true
         resetButton.isHidden = false
@@ -281,5 +359,93 @@ class FollowerViewController: UIViewController {
              sender.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         })
     }
+    
+    
+    @IBAction func saveAction(_ sender: Any) {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy/MM/dd HH:mm:ss"
+        db.collection("users").document(uid).updateData([
+            "lastTime": dateFormatter.string(from: Date())
+        ])
+    }
+    
+    @IBAction func hikakuAction(_ sender: Any) {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy/MM/dd HH:mm:ss"
+        db.collection("users").document(uid).getDocument { (snapshot, error) in
+            if snapshot != nil {
+                let now = dateFormatter.date(from: snapshot!["lastTime"] as! String)
+                let second = now!.secondsFrom()
+                let minute = now!.minutesFrom()
+                let hour = now!.hoursFrom()
+                print("これが人類の答えだ")
+                print("秒数: \(second)")
+                print("分数: \(minute)")
+                print("時数: \(hour)")
+                
+            }
+        }
+    }
+    
+    func saveTimer() {
+        db.collection("users").document(uid).updateData([
+            "timer": "\(String(describing: hourLabel.text!)):\(String(describing: minuteLabel.text!)):\(String(describing: secondLabel.text!))"
+        ])
+    }
+    
+    func showTimer() {
+        print("showTimer開始")
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy/MM/dd HH:mm:ss"
+        db.collection("users").document(uid).getDocument { [self] (snapshot, error) in
+            if error != nil {
+                print(error!)
+                return
+            }
+            if snapshot != nil {
+                let timerString = snapshot!["timer"] as! String
+                let timerArray = timerString.components(separatedBy: ":")
+                let dbSecond = Int(timerArray[2])
+                let dbMinute = Int(timerArray[1])
+                let dbHour = Int(timerArray[0])
 
+                let now = dateFormatter.date(from: snapshot!["lastTime"] as! String)
+                let diffSecond = Int(now!.secondsFrom())
+                let diffMinute = Int(now!.minutesFrom())
+                let diffHour = Int(now!.hoursFrom())
+
+                var timerHour = dbHour! + diffHour
+                var timerMinute = dbMinute! + diffMinute
+                var timerSecond = dbSecond! + diffSecond
+
+                if timerSecond > 59 {
+                    let toMinute = timerSecond / 60
+                    timerMinute += toMinute
+                    timerSecond = timerSecond % 60
+                }
+
+                if timerMinute > 59 {
+                    let toHour = timerMinute / 60
+                    timerHour += toHour
+                    timerMinute = timerMinute % 60
+                }
+
+                secondLabel.text = String(format:"%02d", timerSecond)
+                minuteLabel.text = String(format:"%02d", timerMinute)
+                hourLabel.text = String(format:"%02d", timerHour)
+                print("labelにセットしましたよ")
+                
+                second = timerSecond
+                minute = timerMinute
+                hour = timerHour
+
+                if !timer.isValid {
+                    timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(startTimer), userInfo: nil, repeats: true)
+                    print("showTimer完了")
+                }
+            }
+        }
+    }
+    
+    
 }
