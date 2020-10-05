@@ -229,6 +229,8 @@ class FollowerViewController: UIViewController {
         hourLabel.text = "\(sHour)"
         minuteLabel.text = "\(sMinute)"
         secondLabel.text = "\(sSecond)"
+        
+        hourChech(hour: hour)
     }
     
     
@@ -334,8 +336,6 @@ class FollowerViewController: UIViewController {
 
                 let lastTime = dateFormatter.date(from: snapshot!["lastTime"] as! String)
                 let diffSecond = Int(lastTime!.secondsFrom())
-//                let diffMinute = Int(lastTime!.minutesFrom())
-//                let diffHour = Int(lastTime!.hoursFrom())
 
                 var timerHour = dbHour!
                 var timerMinute = dbMinute!
@@ -351,6 +351,7 @@ class FollowerViewController: UIViewController {
                     let toHour = timerMinute / 60
                     timerHour += toHour
                     timerMinute = timerMinute % 60
+                    hourChech(hour: timerHour)
                 }
 
                 secondLabel.text = String(format:"%02d", timerSecond)
@@ -398,6 +399,26 @@ class FollowerViewController: UIViewController {
                 }
             }
         }
+    }
+    
+    func hourChech(hour: Int) {
+        if hour >= 24 {
+            secondLabel.text = "00"
+            minuteLabel.text = "00"
+            hourLabel.text = "00"
+            
+            if timer.isValid {
+                timer.invalidate()
+            }
+            
+            db.collection("users").document(uid).updateData([
+                "state": "timeout",
+                "studyTime": ""
+            ])
+        }else{
+            print("まだ24時間たってません")
+        }
+        return
     }
     
     

@@ -56,6 +56,7 @@ class FollowerTableViewCell: UITableViewCell {
             animationView = AnimationView(name: "finish")
         default:
             print("default")
+            return
         }
         animationView.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
         animationView.loopMode = .loop

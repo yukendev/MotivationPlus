@@ -20,8 +20,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var requestButton: UIButton!
     
-//    let nameArray: [String] = ["増山", "春", "けんちゃん", "はるぴー"]
-//    let stateArray: [String] = ["勉強中", "休憩中", "7時間", "勉強中" ]
+
     var followerArray = [User]()
     var requestArray = [String]()
     var uidArray = [String]()
@@ -104,12 +103,10 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             cell.stateLabel.isHidden = false
             cell.stateLabel.backgroundColor = UIColor.white
             cell.stateLabel.text = followerArray[indexPath.row].studyTime.prefix(2) + "時間"
-//            cell.stateLabel.tintColor = UIColor.white
             cell.showAnimation(state: "finish", speed: 1.0)
         default:
             print("例外")
-            cell.stateLabel.backgroundColor = UIColor.yellow
-            cell.stateLabel.text = "エラー"
+            cell.stateLabel.isHidden = true
         }
         
         downloadPicture(uid: followerArray[indexPath.row].uid, imageView: cell.iconImageView)

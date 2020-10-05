@@ -57,18 +57,30 @@
                                     <constraint firstAttribute="width" constant="40" id="bal-7K-MBj"/>
                                 </constraints>
                             </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1日前" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YbW-dl-Bi1">
+                                <rect key="frame" x="66" y="0.0" width="70" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="70" id="Cbm-20-5rB"/>
+                                    <constraint firstAttribute="height" constant="21" id="XHk-Xt-p8a"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemTealColor"/>
                         <constraints>
                             <constraint firstItem="vDQ-Jg-Dav" firstAttribute="leading" secondItem="FbK-6L-16P" secondAttribute="leading" constant="8" id="1J4-JM-es2"/>
                             <constraint firstItem="sJy-wU-gu0" firstAttribute="leading" secondItem="Ink-OD-cRk" secondAttribute="trailing" id="2Y2-qv-Njc"/>
+                            <constraint firstAttribute="bottom" secondItem="Ink-OD-cRk" secondAttribute="bottom" constant="20" id="81k-AQ-s7z"/>
+                            <constraint firstItem="YbW-dl-Bi1" firstAttribute="top" secondItem="FbK-6L-16P" secondAttribute="top" id="HvB-20-6iW"/>
                             <constraint firstAttribute="bottom" secondItem="vDQ-Jg-Dav" secondAttribute="bottom" constant="10" id="J3T-na-eMq"/>
                             <constraint firstAttribute="bottom" secondItem="F7i-ts-dwd" secondAttribute="bottom" constant="20" id="O06-6L-Kwg"/>
                             <constraint firstItem="Ink-OD-cRk" firstAttribute="top" secondItem="FbK-6L-16P" secondAttribute="top" constant="20" id="Skt-Iz-fla"/>
                             <constraint firstAttribute="bottom" secondItem="sJy-wU-gu0" secondAttribute="bottom" constant="15" id="UYc-Bc-zp4"/>
                             <constraint firstItem="Ink-OD-cRk" firstAttribute="leading" secondItem="F7i-ts-dwd" secondAttribute="trailing" constant="8" id="V2a-KG-JTH"/>
+                            <constraint firstItem="YbW-dl-Bi1" firstAttribute="leading" secondItem="FbK-6L-16P" secondAttribute="leading" constant="66" id="bWC-nr-5Rv"/>
                             <constraint firstItem="F7i-ts-dwd" firstAttribute="leading" secondItem="vDQ-Jg-Dav" secondAttribute="trailing" constant="8" id="eMx-oT-ePn"/>
-                            <constraint firstAttribute="bottom" secondItem="Ink-OD-cRk" secondAttribute="bottom" constant="20" id="hFa-kN-ace"/>
                             <constraint firstItem="vDQ-Jg-Dav" firstAttribute="top" secondItem="FbK-6L-16P" secondAttribute="top" constant="10" id="ooh-9w-6Lt"/>
                             <constraint firstItem="sJy-wU-gu0" firstAttribute="top" secondItem="FbK-6L-16P" secondAttribute="top" constant="15" id="qmc-T0-zao"/>
                             <constraint firstAttribute="trailing" secondItem="sJy-wU-gu0" secondAttribute="trailing" id="shP-IG-Y9s"/>
