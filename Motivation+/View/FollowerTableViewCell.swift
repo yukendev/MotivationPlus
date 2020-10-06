@@ -30,6 +30,7 @@ class FollowerTableViewCell: UITableViewCell {
         cellContainer.layer.cornerRadius = 5
         nameLabel.layer.cornerRadius = 5
         nameLabel.clipsToBounds = true
+        nameLabel.tintColor = UIColor.white
         stateLabel.layer.cornerRadius = 5
         stateLabel.clipsToBounds = true
         iconImageView.layer.cornerRadius = 5

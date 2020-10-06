@@ -34,6 +34,8 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        searchButton.tintColor = UIColor.white
 
         tableView.delegate = self
         tableView.dataSource = self
@@ -163,6 +165,9 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                             if snapshot!["lastTime"] != nil {
                                 let lastTime = dateFormatter.date(from: snapshot!["lastTime"] as! String)
                                 lastLogin = Int(lastTime!.daysFrom())
+                                if lastLogin > 99 {
+                                    lastLogin = 99
+                                }
                                 print("こいつ全然ログインしてねぇぞ！　\(lastLogin)日前だ！！")
                             }
                             

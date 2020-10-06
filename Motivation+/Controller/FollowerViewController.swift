@@ -24,7 +24,7 @@ class FollowerViewController: UIViewController {
     @IBOutlet weak var finishButton: UIButton!
     
     
-    
+    var delegate: myTabBarDelegate?
     
     var timer = Timer()
     var second: Int = 0
@@ -67,6 +67,10 @@ class FollowerViewController: UIViewController {
         finishButton.addTarget(self, action: #selector(self.pushButton_Animation(_:)), for: .touchDown)
         finishButton.addTarget(self, action: #selector(self.separateButton_Animation(_:)), for: .touchUpInside)
         
+//        delegateでtabButtonを使えなくする
+        print("tabBerNotEnabled発動直前")
+        delegate?.tabBerNotEnabled()
+        
         Auth.auth().signInAnonymously { [self] (authResult, error) in
             guard let user = authResult?.user else { return }
             let isAnonymous = user.isAnonymous  // true
@@ -81,6 +85,11 @@ class FollowerViewController: UIViewController {
                 "userId":"@" + uid.prefix(5)
             ]) { err in
                 screenActive()
+                
+//                delegateでtabButtonを使えるようにす
+                print("tabBerEnabled発動直前")
+                self.delegate?.tabBarEnabled()
+                
                 if err != nil {
                     db.collection("users").document(uid).setData([
                         "uid": uid,

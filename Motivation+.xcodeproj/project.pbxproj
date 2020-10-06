@@ -18,6 +18,7 @@
 		4548D15A250C400B00FC9CDD /* RequestTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4548D158250C400B00FC9CDD /* RequestTableViewCell.xib */; };
 		4548D15D250C470100FC9CDD /* SearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4548D15B250C470100FC9CDD /* SearchTableViewCell.swift */; };
 		4548D15E250C470100FC9CDD /* SearchTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4548D15C250C470100FC9CDD /* SearchTableViewCell.xib */; };
+		454A2CFE252C39DD00D3A3F5 /* TabButtonProtpcol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 454A2CFD252C39DC00D3A3F5 /* TabButtonProtpcol.swift */; };
 		4550BBFC252A1A7000AF7A25 /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4550BBFB252A1A7000AF7A25 /* DateExtension.swift */; };
 		4568B6FF250AF8B200131597 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4568B6FE250AF8B200131597 /* AppDelegate.swift */; };
 		4568B701250AF8B200131597 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4568B700250AF8B200131597 /* SceneDelegate.swift */; };
@@ -53,6 +54,7 @@
 		4548D158250C400B00FC9CDD /* RequestTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RequestTableViewCell.xib; sourceTree = "<group>"; };
 		4548D15B250C470100FC9CDD /* SearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewCell.swift; sourceTree = "<group>"; };
 		4548D15C250C470100FC9CDD /* SearchTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchTableViewCell.xib; sourceTree = "<group>"; };
+		454A2CFD252C39DC00D3A3F5 /* TabButtonProtpcol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabButtonProtpcol.swift; sourceTree = "<group>"; };
 		4550BBFB252A1A7000AF7A25 /* DateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
 		4568B6FB250AF8B200131597 /* Motivation+.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Motivation+.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4568B6FE250AF8B200131597 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -187,6 +189,7 @@
 			isa = PBXGroup;
 			children = (
 				45B80188251CA9D600405928 /* TableViewReloadProtocol.swift */,
+				454A2CFD252C39DC00D3A3F5 /* TabButtonProtpcol.swift */,
 			);
 			path = Protocal;
 			sourceTree = "<group>";
@@ -336,6 +339,7 @@
 				4548D152250B9DB400FC9CDD /* TabBarViewController.swift in Sources */,
 				4548D159250C400B00FC9CDD /* RequestTableViewCell.swift in Sources */,
 				4568B71A250AF98700131597 /* FollowerViewController.swift in Sources */,
+				454A2CFE252C39DD00D3A3F5 /* TabButtonProtpcol.swift in Sources */,
 				45B80189251CA9D600405928 /* TableViewReloadProtocol.swift in Sources */,
 				4568B720250B60E800131597 /* SearchViewController.swift in Sources */,
 				4548D15D250C470100FC9CDD /* SearchTableViewCell.swift in Sources */,

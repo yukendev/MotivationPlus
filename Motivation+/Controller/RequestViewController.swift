@@ -20,6 +20,7 @@ import FirebaseFirestore
 class RequestViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, myTableViewDelegate {
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var requestLabel: UILabel!
     
     var requestsArray = [User]()
     var idArray = [String]()
@@ -85,9 +86,12 @@ class RequestViewController: UIViewController, UITableViewDelegate, UITableViewD
                 self.idArray = snapshot!["requests"] as! [String]
                 if idArray == [] {
                     print("誰もいない")
+                    requestLabel.isHidden = false
+                    requestLabel.text = "リクエストはありません"
                     tableView.reloadData()
                     return
                 }else{
+                    requestLabel.isHidden = true
                     print("厳選前：　\(idArray)")
                     idArray = arrayFilter(array: idArray)
                     print("厳選後：　\(idArray)")

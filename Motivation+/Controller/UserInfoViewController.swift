@@ -34,8 +34,8 @@ class UserInfoViewController: UIViewController, UIImagePickerControllerDelegate 
         imageView.layer.cornerRadius = 20
         imageView.isUserInteractionEnabled = true
         editButton.layer.cornerRadius = 5
-        nameLabel.layer.borderWidth = 2
-        nameLabel.layer.cornerRadius = 5
+//        nameLabel.layer.borderWidth = 2
+//        nameLabel.layer.cornerRadius = 5
         
         uid = user!.uid
         

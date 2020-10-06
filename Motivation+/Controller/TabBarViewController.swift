@@ -8,16 +8,30 @@
 
 import UIKit
 
-class TabBarViewController: UITabBarController {
+class TabBarViewController: UITabBarController, myTabBarDelegate {
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-//        UITabBarItem.appearance().setTitleTextAttributes([ .foregroundColor : UIColor.white], for: .selected)
         UITabBar.appearance().tintColor = UIColor.white
+        UITabBar.appearance().unselectedItemTintColor = UIColor.black
         selectedIndex = 1
     }
     
 
+    func tabBerNotEnabled() {
+        print("tabBerNotEnabled発動")
+        self.tabBar.items![0].isEnabled = false
+        self.tabBar.items![0].isEnabled = false
+        self.tabBar.items![0].isEnabled = false
+    }
+    
+    func tabBarEnabled() {
+        print("tabBerEnabled発動")
+        self.tabBar.items![0].isEnabled = true
+        self.tabBar.items![0].isEnabled = true
+        self.tabBar.items![0].isEnabled = true
+    }
 
 }

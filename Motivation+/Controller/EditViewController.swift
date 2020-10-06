@@ -38,6 +38,8 @@ class EditViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
         editButton.addTarget(self, action: #selector(self.pushButton_Animation(_:)), for: .touchDown)
         editButton.addTarget(self, action: #selector(self.separateButton_Animation(_:)), for: .touchUpInside)
         
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -162,4 +164,10 @@ class EditViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
              sender.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
         })
     }
+    
+    @objc func keyboardWillShow() {
+        
+        print("キーボードが現れた！")
+    }
+    
 }
