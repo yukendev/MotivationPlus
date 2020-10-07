@@ -28,7 +28,6 @@ class LoadingViewController: UIViewController {
                 "uid": uid,
                 "userId":"@" + uid.prefix(5)
             ]) { err in
-//                screenActive()
                 if err != nil {
                     db.collection("users").document(uid).setData([
                         "uid": uid,
@@ -36,7 +35,9 @@ class LoadingViewController: UIViewController {
                         "state": "not studying",
                         "followers": [],
                         "requests": [],
-                        "studyTime": []
+                        "studyTime": [],
+                        "timer": "00:00:00",
+                        "lastTime": ""
                     ]) { err in
                         if let err = err {
                             print("Error writing document: \(err)")

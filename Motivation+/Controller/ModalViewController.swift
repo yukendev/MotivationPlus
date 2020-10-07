@@ -17,7 +17,7 @@ class ModalViewController: UIViewController {
     @IBOutlet weak var animationContainer3: LottieView!
     
     var timeText = String()
-    
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,7 +40,7 @@ class ModalViewController: UIViewController {
     func showAnimation2() {
         var animationView2 = AnimationView()
         animationView2 = AnimationView(name: "cracker2")
-        animationView2.frame = CGRect(x: 0, y: 0, width: 400, height: 140)
+        animationView2.frame = CGRect(x: 0, y: 0, width: self.view.frame.width - 14, height: (self.view.frame.width - 14) * 7 / 20)
         animationView2.loopMode = .loop
         animationContainer2.addSubview(animationView2)
         animationView2.play()
@@ -50,7 +50,7 @@ class ModalViewController: UIViewController {
     func showAnimation3() {
         var animationView3 = AnimationView()
         animationView3 = AnimationView(name: "congratulation")
-        animationView3.frame = CGRect(x: 0, y: 0, width: 345.6, height: 194.4)
+        animationView3.frame = CGRect(x: 0, y: 0, width: self.view.frame.width - 70, height: (self.view.frame.width - 70) * 193 / 344)
         animationContainer3.addSubview(animationView3)
         animationView3.play()
     }

@@ -126,7 +126,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                             dateFormatter.dateFormat = "yyyy/MM/dd HH:mm:ss"
                             var lastLogin = 0
                             if snapshot!["lastTime"] != nil {
-                                let lastTime = dateFormatter.date(from: snapshot!["lastTime"] as! String)
+                                let lastTime = dateFormatter.date(from: document!["lastTime"] as! String)
                                 lastLogin = Int(lastTime!.daysFrom())
                                 if lastLogin > 99 {
                                     lastLogin = 99
@@ -136,6 +136,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                             user.state = document!["state"] as! String
                             user.uid = document!["uid"] as! String
                             user.studyTime = document!["studyTime"] as! String
+                            print(lastLogin)
                             user.lastLogin = lastLogin
                             self.followerArray.append(user)
                             tableView.reloadData()
