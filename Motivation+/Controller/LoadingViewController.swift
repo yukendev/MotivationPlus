@@ -19,27 +19,16 @@ class LoadingViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        //アニメーション開始
         showAnimation()
-        
         Auth.auth().signInAnonymously { [self] (authResult, error) in
             guard let user = authResult?.user else { return }
-            let isAnonymous = user.isAnonymous  // true
             let uidString = user.uid
-            print(isAnonymous)
-            print(uidString)
-            print("匿名ログイン完了")
             self.uid = uidString
-            
             db.collection("users").document(uid).updateData([
                 "uid": uid,
                 "userId":"@" + uid.prefix(5)
             ]) { err in
 //                screenActive()
-//                アニメーション開始
-                
-                
                 if err != nil {
                     db.collection("users").document(uid).setData([
                         "uid": uid,
@@ -65,12 +54,12 @@ class LoadingViewController: UIViewController {
 
     }
     
+    
     func showAnimation() {
         var animationView = AnimationView()
         animationView = AnimationView(name: "loading")
         animationView.loopMode = .loop
         animationView.center = self.view.center
-        
         self.view.addSubview(animationView)
         animationView.play()
     }

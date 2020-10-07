@@ -19,19 +19,5 @@ class TabBarViewController: UITabBarController{
         selectedIndex = 1
     }
     
-//
-//    func tabBerNotEnabled() {
-//        print("tabBerNotEnabled発動")
-//        self.tabBar.items![0].isEnabled = false
-//        self.tabBar.items![1].isEnabled = false
-//        self.tabBar.items![2].isEnabled = false
-//    }
-//
-//    func tabBarEnabled() {
-//        print("tabBerEnabled発動")
-//        self.tabBar.items![0].isEnabled = true
-//        self.tabBar.items![1].isEnabled = true
-//        self.tabBar.items![2].isEnabled = true
-//    }
 
 }

@@ -21,14 +21,12 @@ class ModalViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         timeLabel.text = timeText
-        
     }
+    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         showAnimation2()
         showAnimation3()
     }
@@ -40,7 +38,6 @@ class ModalViewController: UIViewController {
     
     
     func showAnimation2() {
-        print("アニメーション！！！！！")
         var animationView2 = AnimationView()
         animationView2 = AnimationView(name: "cracker2")
         animationView2.frame = CGRect(x: 0, y: 0, width: 400, height: 140)
@@ -49,13 +46,11 @@ class ModalViewController: UIViewController {
         animationView2.play()
     }
     
+    
     func showAnimation3() {
-        print("アニメーション！！！！！")
         var animationView3 = AnimationView()
         animationView3 = AnimationView(name: "congratulation")
         animationView3.frame = CGRect(x: 0, y: 0, width: 345.6, height: 194.4)
-//        animationView3.loopMode = .loop
-//        animationView3.center = animationContainer3.center
         animationContainer3.addSubview(animationView3)
         animationView3.play()
     }
