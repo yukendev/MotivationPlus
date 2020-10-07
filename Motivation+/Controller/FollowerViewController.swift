@@ -38,7 +38,7 @@ class FollowerViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("ViewDidLoad Start")
+        print("ViewDidLoad 発動！")
         
         timerContainer.layer.borderWidth = 2.0
         timerContainer.layer.borderColor = UIColor.gray.cgColor
@@ -70,53 +70,48 @@ class FollowerViewController: UIViewController {
         
         let notificationCenter = NotificationCenter.default
         
-//        notificationCenter.addObserver(self, selector: #selector(self.onDidBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(self.onDidBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
         
         notificationCenter.addObserver(self, selector: #selector(self.willResignActiveNotification), name: UIApplication.willResignActiveNotification, object: nil)
         
-        print("ViewDidLoad Finish")
+        print("ViewDidLoad 終了！")
 
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        print("ViewWillAppear Start")
-        
+        print("ViewWillAppear 発動！")
         screenActive()
+        print("ViewWillAppear 終了！")
     }
     
     @objc func onDidBecomeActive() {
-        print("ぷないぷない")
-        print(uid != "")
-        print("ぷないぷない")
-        
+        print("onDidBecomeActive　発動！")
         if uid != "" {
             screenActive()
         }else{
             print("uidが空白です")
         }
-        
-        
-        
+        print("onDidBecomeActive　終了！")
     }
     
     @objc func willResignActiveNotification() {
-        print("ぷないぷない終了")
+        print("willResignActiveNotification 発動！")
         saveTimer()
+        print("willResignActiveNotification 終了！")
     }
     
     
     @IBAction func startAction(_ sender: Any) {
+        print("startAction 発動！")
         db.collection("users").document(uid).getDocument { [self] (document, error) in
             if let document = document, document.exists {
                 let documentArray = document.data()
                 print("JK")
                 print(documentArray!["uid"]!)
                 if documentArray!["name"] == nil {
-                    print("name is nil")
                     self.showAlert(title: "ユーザーネームを決めて下さい")
                 }else{
-                    print("name is not nil")
                     db.collection("users").document(uid).updateData([
                         "state": "studying",
                         "studyTime": ""
@@ -136,9 +131,11 @@ class FollowerViewController: UIViewController {
                     print("Document does not exist")
                 }
         }
+        print("startAction 終了！")
     }
     
     @IBAction func stopAction(_ sender: Any) {
+        print("stopAction")
         db.collection("users").document(uid).updateData([
             "state": "not studying"
         ])
@@ -174,6 +171,10 @@ class FollowerViewController: UIViewController {
     }
     
     @objc func startTimer() {
+        hour = Int(hourLabel.text!)!
+        minute = Int(minuteLabel.text!)!
+        second = Int(secondLabel.text!)!
+        
         second += 1
         if second == 60 {
             second = 0
@@ -338,6 +339,22 @@ class FollowerViewController: UIViewController {
         }
     }
     
+    func showStopTimer() {
+        db.collection("users").document(uid).getDocument { [self] (snapshot, error) in
+            if snapshot != nil {
+                let timerString = snapshot!["timer"] as! String
+                let timerArray = timerString.components(separatedBy: ":")
+                let dbSecond = timerArray[2]
+                let dbMinute = timerArray[1]
+                let dbHour = timerArray[0]
+                
+                hourLabel.text = dbHour
+                minuteLabel.text = dbMinute
+                secondLabel.text = dbSecond
+            }
+        }
+    }
+    
     func screenActive() {
         db.collection("users").document(uid).getDocument { [self] (snapshot, error) in
             if snapshot != nil {
@@ -353,6 +370,7 @@ class FollowerViewController: UIViewController {
                     stopButton.isHidden = true
                     resetButton.isHidden = false
                     finishButton.isHidden = false
+                    showStopTimer()
                 case "finish":
                     startButton.isHidden = false
                     stopButton.isHidden = true
