@@ -152,6 +152,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func tableViewReload() {
+        print("delegate成功！！")
         print("reload!!!!")
         if searchBar.text != nil {
             search(text: searchBar.text!)

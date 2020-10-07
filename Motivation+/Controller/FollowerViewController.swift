@@ -24,8 +24,6 @@ class FollowerViewController: UIViewController {
     @IBOutlet weak var finishButton: UIButton!
     
     
-    var delegate: myTabBarDelegate?
-    
     var timer = Timer()
     var second: Int = 0
     var minute: Int = 0
@@ -33,6 +31,7 @@ class FollowerViewController: UIViewController {
     
     var uid = String()
     let db = Firestore.firestore()
+    var user = Auth.auth().currentUser
     
     var animationView = AnimationView()
     
@@ -67,53 +66,11 @@ class FollowerViewController: UIViewController {
         finishButton.addTarget(self, action: #selector(self.pushButton_Animation(_:)), for: .touchDown)
         finishButton.addTarget(self, action: #selector(self.separateButton_Animation(_:)), for: .touchUpInside)
         
-//        delegateでtabButtonを使えなくする
-        print("tabBerNotEnabled発動直前")
-        delegate?.tabBerNotEnabled()
-        
-        Auth.auth().signInAnonymously { [self] (authResult, error) in
-            guard let user = authResult?.user else { return }
-            let isAnonymous = user.isAnonymous  // true
-            let uidString = user.uid
-            print(isAnonymous)
-            print(uidString)
-            print("匿名ログイン完了")
-            self.uid = uidString
-            
-            db.collection("users").document(uid).updateData([
-                "uid": uid,
-                "userId":"@" + uid.prefix(5)
-            ]) { err in
-                screenActive()
-                
-//                delegateでtabButtonを使えるようにす
-                print("tabBerEnabled発動直前")
-                self.delegate?.tabBarEnabled()
-                
-                if err != nil {
-                    db.collection("users").document(uid).setData([
-                        "uid": uid,
-                        "userId":"@" + uid.prefix(5),
-                        "state": "not studying",
-                        "followers": [],
-                        "requests": [],
-                        "studyTime": []
-                    ]) { err in
-                        if let err = err {
-                            print("Error writing document: \(err)")
-                        } else {
-                            print("Document successfully written!")
-                        }
-                    }
-                } else {
-                    print("Document successfully written!")
-                }
-            }
-        }
+        uid = user!.uid
         
         let notificationCenter = NotificationCenter.default
         
-        notificationCenter.addObserver(self, selector: #selector(self.onDidBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
+//        notificationCenter.addObserver(self, selector: #selector(self.onDidBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
         
         notificationCenter.addObserver(self, selector: #selector(self.willResignActiveNotification), name: UIApplication.willResignActiveNotification, object: nil)
         
@@ -123,8 +80,9 @@ class FollowerViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         print("ViewWillAppear Start")
+        
+        screenActive()
     }
     
     @objc func onDidBecomeActive() {
