@@ -57,17 +57,20 @@ class FollowerViewController: UIViewController {
         let notificationCenter = NotificationCenter.default
         notificationCenter.addObserver(self, selector: #selector(self.onDidBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
         notificationCenter.addObserver(self, selector: #selector(self.willResignActiveNotification), name: UIApplication.willResignActiveNotification, object: nil)
+        
+        screenActive()
     }
     
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        screenActive()
+//        screenActive()
     }
     
     
     @objc func onDidBecomeActive() {
         if uid != "" {
+            print("jk")
             screenActive()
         }else{
             print("uidが空白です")
@@ -318,6 +321,11 @@ class FollowerViewController: UIViewController {
         db.collection("users").document(uid).getDocument { [self] (snapshot, error) in
             if snapshot != nil {
                 switch snapshot!["state"] as! String {
+                case "initial":
+                    startButton.isHidden = false
+                    stopButton.isHidden = true
+                    resetButton.isHidden = true
+                    finishButton.isHidden = true
                 case "studying":
                     startButton.isHidden = true
                     stopButton.isHidden = false

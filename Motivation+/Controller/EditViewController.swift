@@ -17,6 +17,7 @@ class EditViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var editButton: UIButton!
+    @IBOutlet weak var scrollView: UIScrollView!
     
     var uid = String()
     let db = Firestore.firestore()
@@ -34,7 +35,8 @@ class EditViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
         uid = user!.uid
         editButton.addTarget(self, action: #selector(self.pushButton_Animation(_:)), for: .touchDown)
         editButton.addTarget(self, action: #selector(self.separateButton_Animation(_:)), for: .touchUpInside)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillBeHidden(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -57,6 +59,8 @@ class EditViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
     @IBAction func editAction(_ sender: Any) {
         if textField.text == "" || textField.text == nil {
             showAlert(title: "入力して下さい")
+            textField.endEditing(true)
+            
         }else{
             db.collection("users").document(uid).updateData([
                 "name": textField.text!
@@ -159,7 +163,24 @@ class EditViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
     }
     
     
-    @objc func keyboardWillShow() {
+    @objc func keyboardWillShow(notification: Notification?) {
+        let rect = (notification?.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue
+            let duration: TimeInterval? = notification?.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double
+            UIView.animate(withDuration: duration!) {
+              self.view.transform = CGAffineTransform(translationX: 0, y: -(rect?.size.height)!)
+            }
+    }
+    
+    @objc func keyboardWillBeHidden(notification: Notification?) {
+        let duration: TimeInterval? = notification?.userInfo?[UIResponder.keyboardAnimationCurveUserInfoKey] as? Double
+            UIView.animate(withDuration: duration!) {
+              self.view.transform = CGAffineTransform.identity
+            }
+    }
+    
+    
+    @IBAction func scrollTapAction(_ sender: Any) {
+        textField.resignFirstResponder()
     }
     
 }

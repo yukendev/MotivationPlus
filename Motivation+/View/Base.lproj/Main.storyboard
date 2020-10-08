@@ -811,22 +811,6 @@
                                     <constraint firstAttribute="bottom" secondItem="Iag-HG-Twt" secondAttribute="bottom" id="ZqF-DI-16T"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="V1F-ae-TpG">
-                                <rect key="frame" x="134" y="601" width="146" height="71"/>
-                                <color key="backgroundColor" systemColor="systemOrangeColor"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="V1F-ae-TpG" secondAttribute="height" multiplier="146:71" id="ORw-7Q-Ik9"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
-                                <state key="normal" title="決定">
-                                    <color key="titleColor" systemColor="systemBackgroundColor"/>
-                                </state>
-                                <connections>
-                                    <action selector="editAction:" destination="TFL-b3-fmj" eventType="touchUpInside" id="97v-Tu-5Ju"/>
-                                    <action selector="editAction:" destination="ILc-Db-FVe" eventType="touchUpInside" id="qnH-Wi-bPI"/>
-                                    <action selector="stopAction:" destination="8rJ-Kc-sve" eventType="touchUpInside" id="qho-Xq-FUg"/>
-                                </connections>
-                            </button>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="IMG_0509" translatesAutoresizingMaskIntoConstraints="NO" id="82N-Ef-ei4">
                                 <rect key="frame" x="97" y="155" width="220" height="220"/>
                                 <color key="backgroundColor" systemColor="systemGray3Color"/>
@@ -838,26 +822,60 @@
                                     <outletCollection property="gestureRecognizers" destination="gs9-us-iGk" appends="YES" id="luy-3s-mXf"/>
                                 </connections>
                             </imageView>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="ユーザーネーム" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6JC-st-gz9">
-                                <rect key="frame" x="64" y="452" width="286" height="39.5"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CBO-78-2EE">
+                                <rect key="frame" x="0.0" y="384" width="414" height="512"/>
+                                <subviews>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="ユーザーネーム" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6JC-st-gz9">
+                                        <rect key="frame" x="45" y="97" width="324" height="40"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
+                                        <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                                    </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="V1F-ae-TpG">
+                                        <rect key="frame" x="133" y="221" width="148" height="71"/>
+                                        <color key="backgroundColor" systemColor="systemOrangeColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="V1F-ae-TpG" secondAttribute="height" multiplier="148:71" id="bhU-by-7uv"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
+                                        <state key="normal" title="決定">
+                                            <color key="titleColor" systemColor="systemBackgroundColor"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="editAction:" destination="TFL-b3-fmj" eventType="touchUpInside" id="97v-Tu-5Ju"/>
+                                            <action selector="editAction:" destination="ILc-Db-FVe" eventType="touchUpInside" id="qnH-Wi-bPI"/>
+                                            <action selector="stopAction:" destination="8rJ-Kc-sve" eventType="touchUpInside" id="qho-Xq-FUg"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <gestureRecognizers/>
+                                <constraints>
+                                    <constraint firstItem="6JC-st-gz9" firstAttribute="leading" secondItem="gEj-We-Jqj" secondAttribute="leading" constant="45" id="8CM-O9-wfM"/>
+                                    <constraint firstItem="V1F-ae-TpG" firstAttribute="leading" secondItem="gEj-We-Jqj" secondAttribute="leading" constant="133" id="ENI-ot-sBi"/>
+                                    <constraint firstItem="6JC-st-gz9" firstAttribute="centerX" secondItem="CBO-78-2EE" secondAttribute="centerX" id="S3I-wn-ka9"/>
+                                    <constraint firstItem="gEj-We-Jqj" firstAttribute="trailing" secondItem="6JC-st-gz9" secondAttribute="trailing" constant="45" id="X6z-fm-Ng8"/>
+                                    <constraint firstItem="6JC-st-gz9" firstAttribute="top" secondItem="gEj-We-Jqj" secondAttribute="top" constant="97" id="fQf-1C-Qmw"/>
+                                    <constraint firstItem="gEj-We-Jqj" firstAttribute="trailing" secondItem="V1F-ae-TpG" secondAttribute="trailing" constant="133" id="fZT-mK-4bx"/>
+                                    <constraint firstItem="V1F-ae-TpG" firstAttribute="top" secondItem="6JC-st-gz9" secondAttribute="bottom" constant="84" id="lum-cO-qFD"/>
+                                </constraints>
+                                <viewLayoutGuide key="contentLayoutGuide" id="Rws-dF-O9n"/>
+                                <viewLayoutGuide key="frameLayoutGuide" id="gEj-We-Jqj"/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="eQ3-5I-5jZ" appends="YES" id="XWU-iR-Hhq"/>
+                                </connections>
+                            </scrollView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="1rc-Qj-2Co"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="6JC-st-gz9" firstAttribute="top" secondItem="82N-Ef-ei4" secondAttribute="bottom" constant="77" id="Gjj-Cn-9c1"/>
-                            <constraint firstItem="1rc-Qj-2Co" firstAttribute="trailing" secondItem="V1F-ae-TpG" secondAttribute="trailing" constant="134" id="J4K-de-M43"/>
+                            <constraint firstItem="CBO-78-2EE" firstAttribute="trailing" secondItem="1rc-Qj-2Co" secondAttribute="trailing" id="4TO-Xf-xdv"/>
+                            <constraint firstAttribute="bottom" secondItem="CBO-78-2EE" secondAttribute="bottom" id="B3Z-Rv-jVX"/>
+                            <constraint firstItem="CBO-78-2EE" firstAttribute="leading" secondItem="1rc-Qj-2Co" secondAttribute="leading" id="BVg-tA-N90"/>
+                            <constraint firstItem="CBO-78-2EE" firstAttribute="top" secondItem="82N-Ef-ei4" secondAttribute="bottom" constant="9" id="BXY-Wc-Bn9"/>
                             <constraint firstItem="k0I-mR-Orx" firstAttribute="trailing" secondItem="1rc-Qj-2Co" secondAttribute="trailing" id="PM2-vt-fQl"/>
                             <constraint firstItem="k0I-mR-Orx" firstAttribute="leading" secondItem="1rc-Qj-2Co" secondAttribute="leading" id="Teu-iv-7lY"/>
-                            <constraint firstItem="V1F-ae-TpG" firstAttribute="leading" secondItem="1rc-Qj-2Co" secondAttribute="leading" constant="134" id="Uka-3t-LYT"/>
-                            <constraint firstItem="1rc-Qj-2Co" firstAttribute="trailing" secondItem="6JC-st-gz9" secondAttribute="trailing" constant="64" id="Uwb-4x-hvo"/>
                             <constraint firstItem="k0I-mR-Orx" firstAttribute="top" secondItem="K4O-i1-nj7" secondAttribute="top" id="VxZ-mw-N3N"/>
-                            <constraint firstItem="6JC-st-gz9" firstAttribute="leading" secondItem="1rc-Qj-2Co" secondAttribute="leading" constant="64" id="Yqy-wu-rnP"/>
                             <constraint firstItem="1rc-Qj-2Co" firstAttribute="trailing" secondItem="82N-Ef-ei4" secondAttribute="trailing" constant="97" id="Yvv-MZ-gky"/>
                             <constraint firstItem="82N-Ef-ei4" firstAttribute="leading" secondItem="1rc-Qj-2Co" secondAttribute="leading" constant="97" id="ifC-z0-vHg"/>
-                            <constraint firstItem="V1F-ae-TpG" firstAttribute="top" secondItem="6JC-st-gz9" secondAttribute="bottom" constant="109.5" id="lrb-as-Lg2"/>
                             <constraint firstItem="82N-Ef-ei4" firstAttribute="top" secondItem="k0I-mR-Orx" secondAttribute="bottom" constant="54" id="vgb-m1-9g4"/>
                         </constraints>
                     </view>
@@ -865,6 +883,7 @@
                     <connections>
                         <outlet property="editButton" destination="V1F-ae-TpG" id="fWj-fG-4DQ"/>
                         <outlet property="imageView" destination="82N-Ef-ei4" id="Vhq-Ms-8d5"/>
+                        <outlet property="scrollView" destination="CBO-78-2EE" id="Jtd-0w-lfK"/>
                         <outlet property="textField" destination="6JC-st-gz9" id="qgU-g0-CSw"/>
                     </connections>
                 </viewController>
@@ -872,6 +891,11 @@
                 <tapGestureRecognizer id="gs9-us-iGk">
                     <connections>
                         <action selector="pictureAction:" destination="ILc-Db-FVe" id="OOL-Nj-f4b"/>
+                    </connections>
+                </tapGestureRecognizer>
+                <tapGestureRecognizer id="eQ3-5I-5jZ">
+                    <connections>
+                        <action selector="scrollTapAction:" destination="ILc-Db-FVe" id="3aE-Mu-sv8"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>

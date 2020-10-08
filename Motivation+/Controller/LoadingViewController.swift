@@ -32,7 +32,7 @@ class LoadingViewController: UIViewController {
                     db.collection("users").document(uid).setData([
                         "uid": uid,
                         "userId":"@" + uid.prefix(5),
-                        "state": "not studying",
+                        "state": "initial",
                         "followers": [],
                         "requests": [],
                         "studyTime": [],
