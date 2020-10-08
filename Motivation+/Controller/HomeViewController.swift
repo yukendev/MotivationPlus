@@ -80,6 +80,8 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         cell.uid = followerArray[indexPath.row].uid
         cell.nameLabel.text = followerArray[indexPath.row].name
         switch followerArray[indexPath.row].state {
+        case "initial":
+            cell.showAnimation(state: "initial", speed: 2.5, login: followerArray[indexPath.row].lastLogin)
         case "studying":
             cell.showAnimation(state: "studying", speed: 2.5, login: followerArray[indexPath.row].lastLogin)
         case "not studying":
@@ -127,9 +129,11 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                             var lastLogin = 0
                             if snapshot!["lastTime"] != nil {
                                 let lastTime = dateFormatter.date(from: document!["lastTime"] as! String)
-                                lastLogin = Int(lastTime!.daysFrom())
-                                if lastLogin > 99 {
-                                    lastLogin = 99
+                                if lastTime != nil {
+                                    lastLogin = Int(lastTime!.daysFrom())
+                                    if lastLogin > 99 {
+                                        lastLogin = 99
+                                    }
                                 }
                             }
                             user.name = document!["name"] as! String
@@ -160,17 +164,12 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     func showAlert2(title: String, path: Int) {
         let alertController = UIAlertController(title: title, message: "", preferredStyle: .alert)
         let action1 = UIAlertAction(title: "はい", style: .default) { (alert) in
-            self.okAction(path: path)
+            self.deleteFollower(path: path)
         }
         let cansel = UIAlertAction(title: "いいえ", style: .cancel)
         alertController.addAction(cansel)
         alertController.addAction(action1)
         self.present(alertController, animated: true, completion: nil)
-    }
-    
-    
-    func okAction(path: Int) {
-        deleteFollower(path: path)
     }
     
     
@@ -239,33 +238,34 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
             if snapshot != nil {
                 oldArray = snapshot!["followers"] as! [String]
                 let deletedUid = uidArray[path]
-                oldArray.forEach { (uid) in
-                    if uid != deletedUid {
-                        newArray.append(uid)
+                oldArray.forEach { (id) in
+                    if id != deletedUid {
+                        newArray.append(id)
+                    }
+                }
+                db.collection("users").document(uid).updateData([
+                    "followers": newArray
+                ]){_ in
+                    oldArray = []
+                    newArray = []
+                    db.collection("users").document(uidArray[path]).getDocument { (snapshot, error) in
+                        if snapshot != nil {
+                            oldArray = snapshot!["followers"] as! [String]
+                            let deletedUid = uid
+                            oldArray.forEach { (id) in
+                                if id != deletedUid {
+                                    newArray.append(id)
+                                }
+                            }
+                            db.collection("users").document(uidArray[path]).updateData([
+                                "followers": newArray
+                            ]){_ in
+                                self.showFollower()
+                            }
+                        }
                     }
                 }
             }
-        }
-        db.collection("users").document(uid).updateData([
-            "followers": newArray
-        ])
-        oldArray = []
-        newArray = []
-        db.collection("users").document(uidArray[path]).getDocument { [self] (snapshot, error) in
-            if snapshot != nil {
-                oldArray = snapshot!["followers"] as! [String]
-                let deletedUid = uid
-                oldArray.forEach { (uid) in
-                    if uid != deletedUid {
-                        newArray.append(uid)
-                    }
-                }
-            }
-        }
-        db.collection("users").document(uidArray[path]).updateData([
-            "followers": newArray
-        ]){_ in
-            self.showFollower()
         }
     }
     

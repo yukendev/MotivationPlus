@@ -59,23 +59,31 @@ class FollowerTableViewCell: UITableViewCell {
         }
         animationView.removeFromSuperview()
         switch state {
+        case "initial":
+            print("最初です")
+            animationContainer.isHidden = true
+            stateLabel.text = "勉強中"
+            stateLabel.isHidden = true
         case "studying":
             print("勉強しています")
             animationContainer.isHidden = false
             animationView = AnimationView(name: "run")
             stateLabel.backgroundColor = UIColor.orange
             stateLabel.text = "勉強中"
+            stateLabel.isHidden = false
         case "not studying":
             print("休憩しています")
             animationContainer.isHidden = false
             animationView = AnimationView(name: "sleep")
             stateLabel.backgroundColor = UIColor.green
             stateLabel.text = "休憩中"
+            stateLabel.isHidden = false
         case "finish":
             print("終了しています")
             animationContainer.isHidden = false
             animationView = AnimationView(name: "finish")
             stateLabel.backgroundColor = UIColor.white
+            stateLabel.isHidden = false
         case "timeout":
             print("タイムアウトしています")
             animationContainer.isHidden = true

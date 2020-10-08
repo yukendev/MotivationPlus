@@ -38,7 +38,7 @@ class LoadingViewController: UIViewController {
                         "state": "initial",
                         "followers": [],
                         "requests": [],
-                        "studyTime": [],
+                        "studyTime": "",
                         "timer": "00:00:00",
                         "lastTime": ""
                     ]) { err in
