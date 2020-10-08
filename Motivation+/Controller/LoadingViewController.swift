@@ -21,6 +21,9 @@ class LoadingViewController: UIViewController {
         super.viewDidLoad()
         showAnimation()
         Auth.auth().signInAnonymously { [self] (authResult, error) in
+            if error != nil {
+                print("errorが発生しました")
+            }
             guard let user = authResult?.user else { return }
             let uidString = user.uid
             self.uid = uidString
