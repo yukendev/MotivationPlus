@@ -167,7 +167,7 @@ class EditViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
         let rect = (notification?.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue
             let duration: TimeInterval? = notification?.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double
             UIView.animate(withDuration: duration!) {
-              self.view.transform = CGAffineTransform(translationX: 0, y: -(rect?.size.height)!)
+              self.view.transform = CGAffineTransform(translationX: 0, y: -(rect?.size.height)! + 160)
             }
     }
     
