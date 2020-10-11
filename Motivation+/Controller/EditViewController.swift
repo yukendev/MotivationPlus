@@ -81,7 +81,7 @@ class EditViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
     
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        let image = info[.originalImage] as! UIImage
+        let image = info[.editedImage] as! UIImage
         imageView.image = image
         self.dismiss(animated: true)
     }
@@ -121,7 +121,7 @@ class EditViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
         let meta = StorageMetadata()
         meta.contentType = "image/jpeg"
         if imageView.image != nil {
-            imageData = (imageView.image?.jpegData(compressionQuality: 0.01))!
+            imageData = (imageView.image?.jpegData(compressionQuality: 0.9))!
         }
         imageRef.putData(imageData, metadata: meta) {(metaData, error) in
             self.dismiss(animated: true, completion: nil)

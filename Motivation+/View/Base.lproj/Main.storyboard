@@ -12,7 +12,7 @@
         <!--Follower-->
         <scene sceneID="hNz-n2-bh7">
             <objects>
-                <viewController modalPresentationStyle="fullScreen" id="9pv-A4-QxB" customClass="HomeViewController" customModule="Motivation_" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="fullScreen" id="9pv-A4-QxB" customClass="HomeViewController" customModule="MotivationPlus" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="tsR-hK-woN">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -104,7 +104,7 @@
         <!--Request View Controller-->
         <scene sceneID="4Vn-16-7nX">
             <objects>
-                <viewController modalPresentationStyle="fullScreen" id="9QA-oA-JRQ" customClass="RequestViewController" customModule="Motivation_" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="fullScreen" id="9QA-oA-JRQ" customClass="RequestViewController" customModule="MotivationPlus" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="lsS-5E-CJT">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -190,7 +190,7 @@
         <!--Search View Controller-->
         <scene sceneID="f44-WT-Ya4">
             <objects>
-                <viewController modalPresentationStyle="fullScreen" id="Mm2-Mb-1xT" customClass="SearchViewController" customModule="Motivation_" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="fullScreen" id="Mm2-Mb-1xT" customClass="SearchViewController" customModule="MotivationPlus" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="N8g-O6-Wdp">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -283,7 +283,7 @@
         <!--Modal View Controller-->
         <scene sceneID="oGf-LE-nE7">
             <objects>
-                <viewController id="jDs-lK-X4d" customClass="ModalViewController" customModule="Motivation_" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="jDs-lK-X4d" customClass="ModalViewController" customModule="MotivationPlus" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="xWp-DF-Bcp">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -347,10 +347,10 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oJZ-2O-wQY">
-                                <rect key="frame" x="112" y="371" width="190" height="100"/>
+                                <rect key="frame" x="97" y="371" width="220" height="100"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="100" id="lwa-7C-K6T"/>
-                                    <constraint firstAttribute="width" constant="190" id="yw7-Iq-hQg"/>
+                                    <constraint firstAttribute="width" constant="220" id="yw7-Iq-hQg"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="40"/>
                                 <nil key="textColor"/>
@@ -405,7 +405,7 @@
         <!--Home-->
         <scene sceneID="wg7-f3-ORb">
             <objects>
-                <viewController modalPresentationStyle="fullScreen" id="8rJ-Kc-sve" customClass="FollowerViewController" customModule="Motivation_" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="fullScreen" id="8rJ-Kc-sve" customClass="FollowerViewController" customModule="MotivationPlus" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="QS5-Rx-YEW">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -612,7 +612,7 @@
         <!--UserInfo-->
         <scene sceneID="Y76-VA-bTa">
             <objects>
-                <viewController modalPresentationStyle="fullScreen" id="TFL-b3-fmj" customClass="UserInfoViewController" customModule="Motivation_" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="fullScreen" id="TFL-b3-fmj" customClass="UserInfoViewController" customModule="MotivationPlus" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="meC-ui-oSP">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -764,7 +764,7 @@
         <!--Edit View Controller-->
         <scene sceneID="qIb-uM-q8C">
             <objects>
-                <viewController modalPresentationStyle="fullScreen" id="ILc-Db-FVe" customClass="EditViewController" customModule="Motivation_" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="fullScreen" id="ILc-Db-FVe" customClass="EditViewController" customModule="MotivationPlus" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="K4O-i1-nj7">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -900,7 +900,7 @@
         <!--Tab Bar View Controller-->
         <scene sceneID="yl2-sM-qoP">
             <objects>
-                <tabBarController modalTransitionStyle="flipHorizontal" modalPresentationStyle="fullScreen" id="49e-Tb-3d3" customClass="TabBarViewController" customModule="Motivation_" customModuleProvider="target" sceneMemberID="viewController">
+                <tabBarController modalTransitionStyle="flipHorizontal" modalPresentationStyle="fullScreen" id="49e-Tb-3d3" customClass="TabBarViewController" customModule="MotivationPlus" customModuleProvider="target" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="wtC-zx-oCg"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="W28-zg-YXA">
                         <rect key="frame" x="0.0" y="975" width="768" height="49"/>
@@ -920,7 +920,7 @@
         <!--Loading View Controller-->
         <scene sceneID="dTH-DN-cwO">
             <objects>
-                <viewController id="2nT-vi-MGc" customClass="LoadingViewController" customModule="Motivation_" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="2nT-vi-MGc" customClass="LoadingViewController" customModule="MotivationPlus" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="78P-BA-yoq">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
