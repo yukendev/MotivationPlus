@@ -82,7 +82,7 @@ class FollowerTableViewCell: UITableViewCell {
             print("終了しています")
             animationContainer.isHidden = false
             animationView = AnimationView(name: "finish")
-            stateLabel.backgroundColor = UIColor.white
+            stateLabel.backgroundColor = UIColor.systemYellow
             stateLabel.isHidden = false
         case "timeout":
             print("タイムアウトしています")
